@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>iDoc ERP - ใบเสนอราคา QT202605-148</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --black:#161616; --blue:#0f62fe; --blue-d:#0043ce;
+    --txt:#161616; --txt2:#525252; --txt3:#6f6f6f;
+    --line:#e0e0e0; --line-soft:#f0f0f0; --bg:#f4f4f4;
+    --sel:#edf5ff; --selrow:#d0e2ff; --hover:#e8e8e8;
+    --field:#f4f4f4; --field-bd:#8d8d8d;
+    --green:#24a148; --amber:#b28600; --red:#da1e28; --purple:#8a3ffc;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"IBM Plex Sans Thai","IBM Plex Sans",system-ui,sans-serif; color:var(--txt); background:#fff; font-size:14px; -webkit-font-smoothing:antialiased; }
+  .num { font-variant-numeric:tabular-nums; }
+
+  /* scrollbar บาง จาง แบบ IBM Carbon */
+  * { scrollbar-width: thin; scrollbar-color: #c6c6c6 transparent; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #c6c6c6; border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; background-clip: content-box; }
+  ::-webkit-scrollbar-corner { background: transparent; }
+
+  /* top black bar */
+  .topbar { height:48px; background:var(--black); color:#f4f4f4; display:flex; align-items:center; }
+  .topbar .qtag { width:48px; height:48px; background:var(--green); display:grid; place-items:center; font-weight:700; font-size:13px; color:#fff; }
+  .topbar .app { font-weight:600; font-size:14px; padding:0 14px; white-space:nowrap; }
+  .topbar .doctitle { color:#c6c6c6; font-size:13.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .topbar .spacer { flex:1; }
+  .topbar .ic { width:48px; height:48px; display:grid; place-items:center; color:#c6c6c6; cursor:pointer; }
+  .topbar .ic:hover { background:#292929; }
+  .topbar .me { width:32px; height:32px; border-radius:50%; background:var(--blue); color:#fff; display:grid; place-items:center; font-size:12px; font-weight:600; margin:0 12px; }
+
+  /* toolbar */
+  .toolbar { height:60px; background:#fff; border-bottom:1px solid var(--line); display:flex; align-items:center; padding:0 6px; }
+  .tbtn { min-width:58px; height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; color:var(--txt2); cursor:pointer; border-radius:4px; position:relative; padding:0 6px; }
+  .tbtn:hover { background:var(--bg); }
+  .tbtn svg { width:20px; height:20px; }
+  .tbtn span { font-size:11px; }
+  .tbtn.primary svg, .tbtn.primary span { color:var(--blue); }
+  .tbtn.danger svg, .tbtn.danger span { color:var(--red); }
+  .tbtn .dot { position:absolute; top:8px; right:12px; width:7px; height:7px; background:var(--green); border-radius:50%; }
+  .tbsep { width:1px; height:34px; background:var(--line); margin:0 8px; }
+  .toolbar .spacer { flex:1; }
+
+  /* stepper */
+  .stepper { display:flex; align-items:center; background:#fff; border-bottom:1px solid var(--line); padding:10px 18px; gap:10px; }
+  .step { display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--txt2); }
+  .step .sn { width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-size:11px; font-weight:600; background:var(--line); color:var(--txt2); }
+  .step.done .sn { background:var(--green); color:#fff; }
+  .step.done { color:var(--txt); }
+  .step.cur .sn { background:var(--blue); color:#fff; }
+  .step.cur { color:var(--txt); font-weight:600; }
+  .step .sn svg { width:13px; height:13px; }
+  .stepline { flex:1; height:1px; background:var(--line); max-width:120px; }
+
+  /* doc tabs */
+  .doctabs { display:flex; background:#fff; border-bottom:1px solid var(--line); padding:0 12px; }
+  .dtab { padding:12px 18px 10px; font-size:14px; color:var(--txt2); cursor:pointer; border-bottom:3px solid transparent; }
+  .dtab:hover { background:var(--bg); }
+  .dtab.active { color:var(--txt); font-weight:600; border-bottom-color:var(--blue); }
+
+  /* main row */
+  .main { display:flex; height:calc(100vh - 48px - 60px); }
+  .workzone { flex:1; min-width:0; display:flex; flex-direction:column; }
+  .content { flex:1; min-height:0; display:flex; }
+
+  /* left tree */
+  .dtree { width:210px; flex:none; border-right:1px solid var(--line); display:flex; flex-direction:column; transition:width .15s ease; overflow:hidden; }
+  .dtree .th { height:38px; display:flex; align-items:center; justify-content:space-between; padding:0 6px 0 14px; border-bottom:1px solid var(--line); font-size:12px; font-weight:600; color:var(--txt2); white-space:nowrap; }
+  .dtree .collapse-btn { width:28px; height:28px; display:grid; place-items:center; color:var(--txt2); cursor:pointer; border-radius:4px; }
+  .dtree .collapse-btn:hover { background:var(--bg); }
+  .dtree .tlist { flex:1; overflow:auto; padding:6px 0; }
+  .titem { display:flex; align-items:center; gap:8px; padding:8px 14px; font-size:12.5px; cursor:pointer; white-space:nowrap; }
+  .titem:hover { background:var(--hover); }
+  .titem.sel { background:var(--line); border-left:2px solid var(--blue); padding-left:12px; }
+  .titem .ti { width:16px; height:16px; flex:none; }
+  .titem.fo .ti { color:var(--amber); } .titem.qt .ti { color:var(--green); }
+  .dtree.collapsed { width:38px; }
+  .dtree.collapsed .th span, .dtree.collapsed .tlist { display:none; }
+  .dtree.collapsed .th { justify-content:center; padding:0; }
+
+  /* center */
+  .center { flex:1; min-width:0; overflow:auto; padding:18px 20px; }
+  .sect { margin-bottom:22px; }
+  .sect .sh { font-size:13px; font-weight:600; color:var(--txt); padding-bottom:8px; margin-bottom:14px; border-bottom:1px solid var(--line); }
+  .cols2 { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .field { margin-bottom:14px; display:grid; grid-template-columns:130px 1fr; align-items:center; gap:12px; }
+  .field > label { font-size:12.5px; color:var(--txt2); text-align:right; }
+  .ctrl { position:relative; }
+  .ctrl input, .ctrl select, .ctrl textarea {
+    width:100%; background:var(--field); border:none; border-bottom:1px solid var(--field-bd);
+    padding:9px 11px; font:inherit; font-size:13.5px; color:var(--txt); border-radius:0;
+  }
+  .ctrl textarea { resize:vertical; min-height:84px; line-height:1.5; }
+  .ctrl input:focus, .ctrl select:focus, .ctrl textarea:focus { outline:2px solid var(--blue); outline-offset:-2px; border-bottom-color:transparent; }
+  .ctrl input.amt { text-align:right; font-variant-numeric:tabular-nums; }
+  .ctrl .pick { position:absolute; right:0; top:0; height:100%; width:34px; display:grid; place-items:center; color:var(--blue); cursor:pointer; }
+  .ctrl select { appearance:none; }
+
+  /* items table */
+  .items { width:100%; border-collapse:collapse; }
+  .items th { background:var(--bg); text-align:left; font-size:12px; font-weight:600; color:var(--txt2); padding:9px 10px; border:1px solid var(--line); white-space:nowrap; }
+  .items th.r, .items td.r { text-align:right; }
+  .items th.c, .items td.c { text-align:center; }
+  .items td { padding:7px 10px; border:1px solid var(--line); font-size:13.5px; }
+  .items input, .items select { width:100%; border:1px solid transparent; background:transparent; font:inherit; font-size:13.5px; padding:4px 6px; }
+  .items input:focus, .items select:focus { outline:none; border-color:var(--blue); background:#fff; }
+  .items input.r { text-align:right; font-variant-numeric:tabular-nums; }
+  .items tr.add td { padding:0; }
+  .items .addrow { display:flex; align-items:center; gap:8px; padding:8px 10px; color:var(--blue); font-size:13px; cursor:pointer; }
+  .items .addrow:hover { background:var(--sel); }
+
+  .totals { margin-top:14px; margin-left:auto; width:340px; }
+  .trow { display:flex; justify-content:space-between; padding:7px 12px; font-size:13.5px; }
+  .trow .num { color:var(--txt); }
+  .trow.grand { background:var(--bg); font-weight:700; font-size:15px; border-top:2px solid var(--black); }
+
+  /* right helper: panel + rail */
+  .rightwrap { display:flex; flex:none; }
+  .hpanel { width:368px; border-left:1px solid var(--line); background:#fff; display:flex; flex-direction:column; transition:width .15s ease; overflow:hidden; }
+  .hpanel.closed { width:0; border-left:none; }
+  .hpanel .hh { height:42px; display:flex; align-items:center; justify-content:space-between; padding:0 8px 0 16px; border-bottom:1px solid var(--line); font-size:13.5px; font-weight:600; white-space:nowrap; }
+  .hpanel .hh .x { width:28px; height:28px; display:grid; place-items:center; color:var(--txt2); cursor:pointer; border-radius:4px; }
+  .hpanel .hh .x:hover { background:var(--bg); }
+  .hbody { flex:1; overflow:auto; padding:14px 16px; }
+  .hpanecontent { display:none; }
+  .hpanecontent.show { display:block; }
+
+  .rail { width:64px; flex:none; border-left:1px solid var(--line); background:#fafafa; display:flex; flex-direction:column; padding:6px 0; }
+  .ritem { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 4px; cursor:pointer; color:var(--txt2); border-left:3px solid transparent; text-align:center; }
+  .ritem:hover { background:var(--hover); }
+  .ritem.active { color:var(--blue); border-left-color:var(--blue); background:#fff; }
+  .ritem svg { width:20px; height:20px; }
+  .ritem span { font-size:10.5px; line-height:1.25; }
+  .ritem .rcount { position:absolute; }
+  .ribadge { display:inline-block; min-width:16px; padding:0 4px; background:var(--red); color:#fff; border-radius:8px; font-size:9.5px; line-height:15px; margin-top:1px; }
+
+  /* helper content bits */
+  .kv { display:flex; flex-direction:column; gap:11px; }
+  .kv .r { display:grid; grid-template-columns:96px 1fr; gap:10px; font-size:13px; }
+  .kv .r .k { color:var(--txt2); }
+  .kv .r .v { color:var(--txt); }
+  .chip { display:inline-block; font-size:11px; padding:1px 9px; border-radius:12px; font-weight:500; }
+  .chip.green { background:#defbe6; color:#0e6027; }
+  .mini-tabs { display:flex; gap:2px; border-bottom:1px solid var(--line); margin:4px 0 14px; }
+  .mini-tabs .mt { font-size:12px; padding:7px 10px; color:var(--txt2); cursor:pointer; border-bottom:2px solid transparent; }
+  .mini-tabs .mt.on { color:var(--txt); font-weight:600; border-bottom-color:var(--blue); }
+
+  .loglist { display:flex; flex-direction:column; }
+  .logitem { padding:11px 0; border-bottom:1px solid var(--line-soft); font-size:12.5px; }
+  .logitem .lt { display:flex; justify-content:space-between; color:var(--txt3); font-size:11.5px; margin-bottom:4px; }
+  .logitem .lb { color:var(--txt); line-height:1.5; }
+  .logitem .ls { margin-top:5px; font-size:11.5px; }
+  .logitem .ls b { color:var(--amber); }
+
+  .att { display:flex; align-items:center; gap:10px; padding:10px; border:1px solid var(--line); margin-bottom:8px; border-radius:4px; }
+  .att svg { width:20px; height:20px; color:var(--blue); flex:none; }
+  .att .an { font-size:13px; } .att .am { font-size:11px; color:var(--txt3); }
+
+  .upload { border:1px dashed var(--line); border-radius:4px; padding:18px; text-align:center; color:var(--txt2); font-size:12.5px; cursor:pointer; }
+  .upload:hover { background:var(--bg); }
+
+  .field-sm { margin-bottom:12px; }
+  .field-sm label { display:block; font-size:12px; color:var(--txt2); margin-bottom:5px; }
+  .field-sm input, .field-sm select, .field-sm textarea { width:100%; background:var(--field); border:none; border-bottom:1px solid var(--field-bd); padding:8px 10px; font:inherit; font-size:13px; }
+  .btn-dark { width:100%; background:var(--black); color:#fff; border:none; padding:10px; font:inherit; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .btn-dark:hover { background:#393939; }
+
+  .review { display:flex; flex-direction:column; gap:10px; }
+  .rcheck { display:flex; align-items:center; gap:10px; font-size:13px; padding:8px 0; border-bottom:1px solid var(--line-soft); }
+  .rcheck .ok { color:var(--green); } .rcheck .miss { color:var(--red); }
+  .rcheck svg { width:17px; height:17px; }
+
+  /* responsive */
+  @media (max-width:1100px) {
+    .hpanel { width:345px; }
+  }
+  @media (max-width:900px) {
+    .main { height:auto; flex-direction:column; }
+    .dtree { width:100%; border-right:none; border-bottom:1px solid var(--line); }
+    .dtree.collapsed { width:100%; }
+    .cols2 { grid-template-columns:1fr; gap:0; }
+    .content { flex-direction:column; }
+    .rightwrap { width:100%; }
+    .hpanel { flex:1; }
+    .totals { width:100%; }
+    .field { grid-template-columns:110px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- top bar -->
+  <div class="topbar">
+    <div class="qtag">QT</div>
+    <div class="app">iDoc ERP</div>
+    <div class="doctitle">QT202605-148 · พอช เมดิก้า อินเตอร์เนชั่นแนล (ประเทศไทย) · TR-ISO14001:2026</div>
+    <div class="spacer"></div>
+    <div class="ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+    <div class="me">A</div>
+  </div>
+
+  <!-- toolbar -->
+  <div class="toolbar">
+    <div class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span>กลับ</span></div>
+    <div class="tbtn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span>รีเฟรช</span></div>
+    <div class="tbtn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg><span>Save</span><span class="dot"></span></div>
+    <div class="tbsep"></div>
+    <div class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span>พิมพ์</span></div>
+    <div class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg><span>ขอแก้ไข</span></div>
+    <div class="spacer"></div>
+    <div class="tbtn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>ส่ง / ปิด</span></div>
+  </div>
+
+  <!-- main -->
+  <div class="main">
+
+    <!-- left tree (collapsible) -->
+    <div class="dtree" id="dtree">
+      <div class="th"><span>Documents</span>
+        <div class="collapse-btn" onclick="document.getElementById('dtree').classList.toggle('collapsed')" title="ยุบ/ขยาย">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </div>
+      </div>
+      <div class="tlist">
+        <div class="titem fo"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>FO202605-222</div>
+        <div class="titem qt sel"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>QT202605-148</div>
+      </div>
+    </div>
+
+    <!-- workzone: stepper + tabs + content (อยู่ขวาของแผง Documents) -->
+    <div class="workzone">
+
+      <!-- stepper -->
+      <div class="stepper">
+        <div class="step done"><span class="sn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>สร้าง</div>
+        <div class="stepline"></div>
+        <div class="step cur"><span class="sn">2</span>ติดตาม</div>
+        <div class="stepline"></div>
+        <div class="step"><span class="sn">3</span>ปิดการขาย</div>
+      </div>
+
+      <!-- doc tabs -->
+      <div class="doctabs">
+        <div class="dtab active">ใบเสนอราคา</div>
+        <div class="dtab">รายละเอียด</div>
+      </div>
+
+      <div class="content">
+
+    <!-- center form -->
+    <div class="center">
+
+      <div class="cols2">
+        <!-- ข้อมูลการเสนอราคา -->
+        <div class="sect">
+          <div class="sh">ข้อมูลการเสนอราคา</div>
+          <div class="field"><label>รหัสลูกค้า</label><div class="ctrl"><input value="REG202603-8459 พอช เมดิก้า อินเตอร์เนชั่นแนล" /><span class="pick"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span></div></div>
+          <div class="field"><label>วันที่จัดทำ</label><div class="ctrl"><input type="date" value="2026-05-29" /></div></div>
+          <div class="field"><label>บริการที่นำเสนอ</label><div class="ctrl"><input value="TR-ISO14001:2026" /></div></div>
+          <div class="field"><label>ราคารวมก่อนลด</label><div class="ctrl"><input class="amt" value="18,000.00" /></div></div>
+          <div class="field"><label>ส่วนลดรวม</label><div class="ctrl"><input class="amt" value="0.00" /></div></div>
+          <div class="field"><label>ราคาหลังหักส่วนลด</label><div class="ctrl"><input class="amt" value="18,000.00" /></div></div>
+          <div class="field"><label>ราคารวม VAT</label><div class="ctrl"><input class="amt" value="1,260.00" /></div></div>
+          <div class="field"><label>ราคาเสนอรวม</label><div class="ctrl"><input class="amt" value="19,260.00" /></div></div>
+        </div>
+
+        <!-- ข้อมูลประกอบ -->
+        <div class="sect">
+          <div class="sh">ข้อมูลประกอบ</div>
+          <div class="field"><label>เงื่อนไขการชำระเงิน</label><div class="ctrl"><select><option>ชำระเงินก่อนเริ่มดำเนินกิจกรรม ไม่เกิน 7 วัน</option></select><span class="pick"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></div></div>
+          <div class="field"><label>การเก็บเงินงวดสุดท้าย</label><div class="ctrl"><select><option>-</option></select><span class="pick"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></div></div>
+          <div class="field" style="grid-template-columns:130px 1fr; align-items:start;"><label style="margin-top:8px;">หมายเหตุใบเสนอราคา</label><div class="ctrl"><textarea>- สถานที่อบรม จังหวัดปทุมธานี
+- ฟรีใบเซอร์ จำนวน 30 ใบ</textarea></div></div>
+        </div>
+      </div>
+
+      <!-- รายการย่อย -->
+      <div class="sect">
+        <div class="sh">รายการย่อย (Items)</div>
+        <table class="items">
+          <thead>
+            <tr>
+              <th class="c" style="width:42px;">#</th>
+              <th>รายการ</th>
+              <th style="width:150px;">ประเภทบริการ</th>
+              <th class="r" style="width:96px;">ราคา</th>
+              <th class="r" style="width:80px;">ส่วนลด</th>
+              <th class="r" style="width:70px;">จำนวน</th>
+              <th class="c" style="width:70px;">หน่วย</th>
+              <th class="r" style="width:110px;">ราคารวม</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="c">1</td>
+              <td><input value="ข้อกำหนดมาตรฐาน ISO14001:2026 Requirement" /></td>
+              <td><select><option>บริการฝึกอบรม</option></select></td>
+              <td><input class="r" value="18,000.00" /></td>
+              <td><input class="r" value="0.00" /></td>
+              <td><input class="r" value="1" /></td>
+              <td><select><option>MD</option></select></td>
+              <td class="r num">18,000.00</td>
+            </tr>
+            <tr class="add"><td colspan="8"><div class="addrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>เพิ่มรายการ</div></td></tr>
+          </tbody>
+        </table>
+
+        <div class="totals">
+          <div class="trow"><span>รวมเป็นเงิน</span><span class="num">18,000.00</span></div>
+          <div class="trow"><span>ส่วนลด</span><span class="num">0.00</span></div>
+          <div class="trow"><span>ราคาหลังหักส่วนลด</span><span class="num">18,000.00</span></div>
+          <div class="trow"><span>ภาษีมูลค่าเพิ่ม 7%</span><span class="num">1,260.00</span></div>
+          <div class="trow grand"><span>ราคาเสนอรวม (บาท)</span><span class="num">19,260.00</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- right helper -->
+    <div class="rightwrap">
+      <div class="hpanel" id="hpanel">
+        <div class="hh"><span id="hpanel-title">ข้อมูลลูกค้า</span>
+          <div class="x" onclick="document.getElementById('hpanel').classList.add('closed')" title="ปิดแผง"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+        </div>
+        <div class="hbody">
+
+          <!-- การตรวจทาน -->
+          <div class="hpanecontent" data-pane="review">
+            <div class="review">
+              <div class="rcheck"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span>มีรหัสลูกค้า</div>
+              <div class="rcheck"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span>มีรายการอย่างน้อย 1 รายการ</div>
+              <div class="rcheck"><span class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span>ระบุเงื่อนไขการชำระเงิน</div>
+              <div class="rcheck"><span class="miss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>ยังไม่ได้แนบใบ Cert ตัวอย่าง</div>
+              <div class="rcheck"><span class="miss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>ยังไม่มีผู้อนุมัติ</div>
+            </div>
+          </div>
+
+          <!-- ไฟล์แนบ -->
+          <div class="hpanecontent" data-pane="files">
+            <div class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div><div class="an">ใบเสนอราคา_QT148.pdf</div><div class="am">142 KB · 29 พ.ค. 2026</div></div></div>
+            <div class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><div><div class="an">หลักสูตรอบรม_ISO14001.docx</div><div class="am">88 KB · 28 พ.ค. 2026</div></div></div>
+            <div class="upload">ลากไฟล์มาวาง หรือ คลิกเพื่อเลือกไฟล์</div>
+          </div>
+
+          <!-- ข้อมูลลูกค้า (default) -->
+          <div class="hpanecontent show" data-pane="customer">
+            <div class="mini-tabs">
+              <div class="mt on">ทั่วไป</div><div class="mt">ที่อยู่</div><div class="mt">การเงิน</div><div class="mt">ผู้ติดต่อ</div>
+            </div>
+            <div class="kv">
+              <div class="r"><span class="k">รหัส</span><span class="v">REG202603-8459</span></div>
+              <div class="r"><span class="k">ชื่อ</span><span class="v">บจก. พอช เมดิก้า อินเตอร์เนชั่นแนล (ประเทศไทย)</span></div>
+              <div class="r"><span class="k">สถานะ</span><span class="v"><span class="chip green">ACTIVE</span></span></div>
+              <div class="r"><span class="k">ประเภท</span><span class="v">นิติบุคคล</span></div>
+              <div class="r"><span class="k">กลุ่ม</span><span class="v">ลูกค้า</span></div>
+              <div class="r"><span class="k">หมวดหมู่</span><span class="v">อื่นๆ</span></div>
+              <div class="r"><span class="k">รายละเอียด</span><span class="v">เครื่องสำอาง / เครื่องดื่มชาชงดื่ม</span></div>
+              <div class="r"><span class="k">เกรด</span><span class="v">NONE · คะแนน 20</span></div>
+              <div class="r"><span class="k">สร้างเมื่อ</span><span class="v">2026-03-02 21:28</span></div>
+              <div class="r"><span class="k">อัพเดตล่าสุด</span><span class="v">2026-05-29 15:25 (ครั้งที่ 2)</span></div>
+            </div>
+          </div>
+
+          <!-- กำหนดติดตาม -->
+          <div class="hpanecontent" data-pane="followup">
+            <div class="field-sm"><label>กิจกรรม</label><input placeholder="ระบุกิจกรรมติดตาม" /></div>
+            <div class="field-sm"><label>วันที่</label><input type="date" /></div>
+            <button class="btn-dark"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>บันทึก</button>
+            <div style="margin-top:16px;">
+              <div class="logitem"><div class="lt"><span>11 มิ.ย. 2026 · 08:00-18:00</span></div><div class="lb">ติดตามใบเสนอราคา</div><div class="ls">โดย กุลจิรา · ถึง แม็คซ์ฟู้ด กรุ๊ป · <b>ยังไม่ดำเนินการ</b></div></div>
+              <div class="logitem"><div class="lt"><span>11 มิ.ย. 2026 · 08:00-18:00</span></div><div class="lb">ติดตามใบเสนอราคา</div><div class="ls">โดย กุลจิรา · ถึง เจ๊วรรณา ฟู้ดอินเตอร์ · <b>ยังไม่ดำเนินการ</b></div></div>
+            </div>
+          </div>
+
+          <!-- การสื่อสาร -->
+          <div class="hpanecontent" data-pane="comm">
+            <div class="field-sm"><label>ข้อความสำคัญ</label><textarea placeholder="พิมพ์ข้อความ..." style="min-height:60px;"></textarea></div>
+            <button class="btn-dark">บันทึกข้อความ</button>
+            <div style="font-size:11.5px; color:var(--txt3); margin:14px 0 4px;">ทั้งหมด 56 รายการ</div>
+            <div class="loglist">
+              <div class="logitem"><div class="lt"><span>กุลจิรา เกิดศักดิ์</span><span>29 พ.ค. 14:53</span></div><div class="lb">เปิด FO 1 กิจกรรม · อบรมข้อกำหนด ISO14001:2026 1 วัน ราคา 18,000 บาท · สถานที่ จ.ปทุมธานี · ไม่เกิน 30 ท่าน</div></div>
+              <div class="logitem"><div class="lt"><span>กุลจิรา เกิดศักดิ์</span><span>27 เม.ย. 16:57</span></div><div class="lb">แก้ไขผู้ติดต่อ คุณภัทรพงษ์ลาออก เพิ่มคุณอมรเทพ</div></div>
+              <div class="logitem"><div class="lt"><span>กุลจิรา เกิดศักดิ์</span><span>22 เม.ย. 11:07</span></div><div class="lb">โทรไม่รับสาย รอติดต่อใหม่</div></div>
+            </div>
+          </div>
+
+          <!-- บันทึกผลการโทร -->
+          <div class="hpanecontent" data-pane="call">
+            <div class="field-sm"><label>ผลการโทร</label><select><option>รอพิจารณา / รอตัดสินใจ</option><option>สนใจ / นัดหมาย</option><option>ไม่สนใจ / ปฏิเสธ</option><option>ไม่มีผู้รับ</option></select></div>
+            <div class="field-sm"><label>เวลาที่โทร (นาที)</label><input /></div>
+            <div class="field-sm"><label>ปัญหาที่เจอ</label><input /></div>
+            <button class="btn-dark">บันทึกผลการโทร</button>
+            <div style="font-size:11.5px; color:var(--txt3); margin:14px 0 4px;">ทั้งหมด 16 รายการ</div>
+            <div class="loglist">
+              <div class="logitem"><div class="lt"><span>กุลจิรา เกิดศักดิ์</span><span>29 พ.ค. 15:04</span></div><div class="lb">สนใจ / นัดหมาย</div></div>
+              <div class="logitem"><div class="lt"><span>กุลจิรา เกิดศักดิ์</span><span>27 เม.ย. 17:01</span></div><div class="lb">ไม่สนใจ / ปฏิเสธ</div></div>
+              <div class="logitem"><div class="lt"><span>กุลจิรา เกิดศักดิ์</span><span>22 เม.ย. 11:07</span></div><div class="lb">ติดต่อใหม่</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- rail -->
+      <div class="rail">
+        <div class="ritem" data-pane="review" onclick="pickPane(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>ตรวจทาน</span></div>
+        <div class="ritem" data-pane="files" onclick="pickPane(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg><span>ไฟล์แนบ</span><span class="ribadge">2</span></div>
+        <div class="ritem active" data-pane="customer" onclick="pickPane(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>ลูกค้า</span></div>
+        <div class="ritem" data-pane="followup" onclick="pickPane(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>ติดตาม</span><span class="ribadge">2</span></div>
+        <div class="ritem" data-pane="comm" onclick="pickPane(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>สื่อสาร</span><span class="ribadge">56</span></div>
+        <div class="ritem" data-pane="call" onclick="pickPane(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>ผลโทร</span><span class="ribadge">16</span></div>
+      </div>
+    </div>
+
+      </div><!-- /content -->
+    </div><!-- /workzone -->
+
+  </div>
+
+<script>
+  var titles = { review:'การตรวจทาน', files:'ไฟล์แนบ', customer:'ข้อมูลลูกค้า', followup:'กำหนดติดตาม', comm:'การสื่อสาร', call:'บันทึกผลการโทร' };
+  function pickPane(el){
+    var pane = el.getAttribute('data-pane');
+    var panel = document.getElementById('hpanel');
+    var isActive = el.classList.contains('active') && !panel.classList.contains('closed');
+    document.querySelectorAll('.ritem').forEach(function(r){ r.classList.remove('active'); });
+    if (isActive) { panel.classList.add('closed'); return; }      // คลิกซ้ำ = ปิดแผง
+    el.classList.add('active');
+    panel.classList.remove('closed');
+    document.getElementById('hpanel-title').textContent = titles[pane];
+    document.querySelectorAll('.hpanecontent').forEach(function(c){ c.classList.toggle('show', c.getAttribute('data-pane') === pane); });
+  }
+</script>
+
+</body>
+</html>

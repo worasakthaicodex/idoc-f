@@ -1,0 +1,28 @@
+set DB_URL=jdbc:postgresql://localhost:5433/idoc&& set DB_USERNAME=idoc&& set DB_PASSWORD=idoc&& mvnw spring-boot:run
+
+DROP SCHEMA public CASCADE; CREATE SCHEMA public;
+
+
+
+FOR /F "tokens=5" %T IN ('netstat -a -n -o ^| findstr :5174') DO taskkill /f /pid %T
+npm run dev
+
+ssh -i %USERPROFILE%\.ssh\idoc_vultr root@45.77.245.101
+exit
+systemctl status postgresql
+pg_lsclusters
+ss -nlt | grep 5432
+systemctl restart postgresql
+
+# สั่งเปิดพอร์ต 5432 ให้โลกภายนอกวิ่งเข้ามาได้
+sudo ufw allow 5432/tcp
+
+# สั่งโหลดระบบรีเฟรชกำแพงไฟใหม่
+sudo ufw reload
+
+
+ssh -i %USERPROFILE%\.ssh\idoc_vultr root@45.77.245.101 "sudo apt update && sudo apt install postgresql postgresql-contrib -y && sudo sed -i \"s/#listen_addresses = 'localhost'/listen_addresses = '*'/g\" /etc/postgresql/*/main/postgresql.conf && echo \"host    all             all             0.0.0.0/0               md5\" | sudo tee -a /etc/postgresql/*/main/pg_hba.conf && sudo systemctl restart postgresql && sudo -u postgres psql -c \"ALTER USER postgres PASSWORD 'idoc';\""
+ssh -i %USERPROFILE%\.ssh\idoc_vultr root@45.77.245.101 "sudo -u postgres psql -c \"CREATE DATABASE idoc_db;\" && sudo -u postgres psql -c \"CREATE DATABASE idoc_db2;\""
+
+
+ssh -i %USERPROFILE%\.ssh\idoc_vultr root@45.77.245.101 "PDIR=\$(dirname \$(find /etc/postgresql -name postgresql.conf | head -n 1)) && openssl req -new -x509 -days 3650 -nodes -text -out \$PDIR/server.crt -keyout \$PDIR/server.key -subj /CN=45.77.245.101 && chmod 600 \$PDIR/server.key && chown postgres:postgres \$PDIR/server.crt \$PDIR/server.key && sed -i \"s|ssl = off|ssl = on|g\" \$PDIR/postgresql.conf && sed -i \"s|#ssl = off|ssl = on|g\" \$PDIR/postgresql.conf && sed -i \"s|ssl_cert_file = .*|ssl_cert_file = '\$PDIR/server.crt'|g\" \$PDIR/postgresql.conf && sed -i \"s|ssl_key_file = .*|ssl_key_file = '\$PDIR/server.key'|g\" \$PDIR/postgresql.conf && sed -i \"s|host    all             all             0.0.0.0/0               md5|hostssl all             all             0.0.0.0/0               md5|g\" \$PDIR/pg_hba.conf && systemctl restart postgresql"

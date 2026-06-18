@@ -1,0 +1,20 @@
+-- ข้อมูลพนักงานจริง (อิงตารางเดิม) — ติดต่อ / ที่อยู่ / เอกสาร
+alter table employee
+    add column birthday          date,
+    add column id_card           varchar(30),
+    add column tel               varchar(30),
+    add column mobile            varchar(30),
+    add column line              varchar(100),
+    add column house_number      varchar(50),
+    add column building          varchar(100),
+    add column village           varchar(100),
+    add column alley             varchar(100),
+    add column road              varchar(100),
+    add column sub_district      varchar(100),
+    add column province          varchar(100),
+    add column zip               varchar(10),
+    add column address           text,
+    add column passport_no       varchar(50),
+    add column passport_date     date,
+    add column passport_country  varchar(100),
+    add column passport_district varchar(100);

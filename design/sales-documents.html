@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>iDoc ERP - งานขาย / กล่องเอกสาร</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --black: #161616;
+    --blue: #0f62fe;
+    --txt: #161616;
+    --txt2: #525252;
+    --txt3: #6f6f6f;
+    --line: #e0e0e0;
+    --line-soft: #f0f0f0;
+    --bg: #f4f4f4;
+    --sel: #edf5ff;
+    --selrow: #d0e2ff;
+    --hover: #e8e8e8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, sans-serif;
+    color: var(--txt); background: #fff; font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- Top black bar ---------- */
+  .topbar {
+    height: 48px; background: var(--black); color: #f4f4f4;
+    display: flex; align-items: center; border-bottom: 1px solid #393939;
+  }
+  .topbar .ham { width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer; }
+  .topbar .ham:hover { background: #292929; }
+  .topbar .app { font-weight: 600; font-size: 15px; padding-right: 16px; white-space: nowrap; }
+  .topbar .sep { width: 1px; height: 24px; background: #525252; }
+  .topbar .docsel {
+    display: flex; align-items: center; gap: 10px; padding: 0 16px; height: 100%;
+    cursor: pointer; color: #c6c6c6; font-size: 14px;
+  }
+  .topbar .docsel:hover { background: #292929; }
+  .topbar .docsel .di { color: #78a9ff; }
+  .topbar .spacer { flex: 1; }
+  .topbar .ic { width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer; color: #c6c6c6; }
+  .topbar .ic:hover { background: #292929; }
+  .topbar .me { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 600; margin: 0 12px; }
+
+  /* ---------- Sub toolbar ---------- */
+  .subbar {
+    height: 44px; background: #fff; border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; padding: 0 8px;
+  }
+  .subbar .tb { width: 40px; height: 40px; display: grid; place-items: center; color: var(--txt2); cursor: pointer; }
+  .subbar .tb:hover { background: var(--bg); }
+  .subbar .tb.on { color: var(--blue); }
+  .subbar .vsep { width: 1px; height: 22px; background: var(--line); margin: 0 6px; }
+  .subbar .spacer { flex: 1; }
+  .subbar .fields { display: flex; align-items: center; gap: 8px; color: var(--blue); font-size: 13.5px; padding: 0 14px; cursor: pointer; }
+
+  /* ---------- Tabs ---------- */
+  .tabs { display: flex; background: #fff; border-bottom: 1px solid var(--line); padding: 0 8px; }
+  .tab {
+    padding: 13px 18px 11px; font-size: 14px; color: var(--txt2); cursor: pointer;
+    border-bottom: 3px solid transparent; white-space: nowrap; display: flex; align-items: center; gap: 8px;
+  }
+  .tab:hover { background: var(--bg); }
+  .tab.active { color: var(--txt); font-weight: 600; border-bottom-color: var(--blue); }
+  .tab .badge { font-size: 11px; background: var(--bg); color: var(--txt2); padding: 1px 7px; border-radius: 10px; font-weight: 600; }
+  .tab.active .badge { background: var(--selrow); color: #0043ce; }
+
+  /* ---------- Layout ---------- */
+  .layout { display: flex; height: calc(100vh - 48px - 44px); }
+  .workzone { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .content { flex: 1; min-height: 0; display: flex; }
+
+  /* left thin list */
+  .picker { width: 196px; flex: none; border-right: 1px solid var(--line); display: flex; flex-direction: column; background: #fff; }
+  .picker .ph { padding: 14px 16px 8px; font-size: 13px; font-weight: 600; color: var(--txt); }
+  .picker .plist { overflow-y: auto; flex: 1; }
+  .pitem { padding: 9px 16px; cursor: pointer; display: flex; align-items: baseline; gap: 8px; border-left: 2px solid transparent; }
+  .pitem:hover { background: var(--hover); }
+  .pitem.sel { background: var(--line); border-left-color: var(--blue); }
+  .pitem .pc { font-size: 13.5px; font-weight: 600; color: var(--txt); min-width: 22px; }
+  .pitem .pn { font-size: 13px; color: var(--txt2); }
+  .pitem.sel .pn { color: var(--txt); }
+  .pitem .pq { margin-left: auto; font-size: 12px; color: var(--txt3); }
+
+  /* center table */
+  .center { flex: 1; min-width: 0; display: flex; flex-direction: column; border-right: 1px solid var(--line); }
+  .center .chead { padding: 12px 16px 10px; font-size: 13px; color: var(--txt2); border-bottom: 1px solid var(--line-soft); }
+  .center .chead b { color: var(--txt); font-size: 14px; }
+  .tablewrap { overflow: auto; flex: 1; }
+  table.grid { width: 100%; border-collapse: collapse; }
+  .grid th {
+    position: sticky; top: 0; background: var(--bg); text-align: left; font-weight: 600;
+    color: var(--txt2); font-size: 12px; padding: 9px 14px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  .grid th.r, .grid td.r { text-align: right; }
+  .grid td { padding: 8px 14px; border-bottom: 1px solid var(--line-soft); font-size: 13.5px; white-space: nowrap; }
+  .grid tr:hover td { background: #f8f9fb; }
+  .grid tr.grp td { font-weight: 600; background: #fafafa; }
+  .grid tr.grp:hover td { background: #f3f4f6; }
+  .grid tr.sel td { background: var(--selrow); }
+  .grid tr.sel:hover td { background: #bcd4fb; }
+  .tcell { display: flex; align-items: center; gap: 6px; }
+  .chev { width: 14px; height: 14px; color: var(--txt2); flex: none; }
+  .lvl1 { padding-left: 14px; } .lvl2 { padding-left: 38px; }
+  .docno { color: var(--blue); font-weight: 500; }
+  .cust { color: var(--txt2); }
+  .age { font-size: 12px; }
+  .age.warn { color: #b28600; } .age.bad { color: #da1e28; font-weight: 600; }
+
+  /* right panel */
+  .right { width: 320px; flex: none; overflow-y: auto; background: #fff; padding: 14px; }
+  .selbox { border: 1px solid var(--line); padding: 12px 14px; margin-bottom: 12px; }
+  .selbox .sl { font-size: 11px; color: var(--txt3); display: flex; align-items: center; gap: 6px; }
+  .selbox .sv { font-size: 15px; font-weight: 600; margin-top: 4px; display: flex; align-items: center; justify-content: space-between; }
+  .selbox .sv svg { width: 14px; height: 14px; color: var(--txt2); }
+
+  .chart-title { font-size: 13.5px; font-weight: 600; margin: 16px 0 4px; }
+  .legend { display: flex; gap: 16px; font-size: 11.5px; color: var(--txt2); margin-bottom: 12px; }
+  .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .lg-a { background: #8a3ffc; } .lg-b { background: #4589ff; }
+  .bars { display: flex; flex-direction: column; gap: 9px; }
+  .brow { font-size: 11.5px; }
+  .brow .bl { color: var(--txt2); margin-bottom: 3px; display: flex; justify-content: space-between; }
+  .brow .bt { display: flex; height: 16px; border-radius: 2px; overflow: hidden; background: var(--bg); }
+  .brow .ba { background: #8a3ffc; } .brow .bb { background: #4589ff; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px) {
+    .layout { height: auto; flex-direction: column; }
+    .picker { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+    .picker .plist { display: flex; overflow-x: auto; }
+    .pitem { flex: none; border-left: none; border-bottom: 2px solid transparent; }
+    .pitem.sel { border-left: none; border-bottom-color: var(--blue); }
+    .pitem .pq { display: none; }
+    .content { flex-direction: column; }
+    .center { border-right: none; }
+    .right { width: 100%; border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) {
+    .topbar .app { font-size: 13px; }
+    .topbar .docsel .dt { display: none; }
+    .tab { padding: 12px 12px 10px; font-size: 13px; }
+    .grid td, .grid th { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top black bar -->
+  <div class="topbar">
+    <div class="ham"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
+    <div class="app">iDoc ERP</div>
+    <div class="sep"></div>
+    <div class="docsel">
+      <svg class="di" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span class="dt">งานขาย — กล่องเอกสาร</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="spacer"></div>
+    <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+    <div class="me">A</div>
+  </div>
+
+  <!-- Sub toolbar -->
+  <div class="subbar">
+    <div class="tb" title="รีเฟรช"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+    <div class="tb" title="พิมพ์"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+    <div class="tb" title="ส่งออก Excel"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+    <div class="vsep"></div>
+    <div class="tb" title="ตัวกรอง"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
+    <div class="spacer"></div>
+    <div class="fields"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>คอลัมน์</div>
+  </div>
+
+  <!-- Layout -->
+  <div class="layout">
+
+    <!-- LEFT thin picker -->
+    <div class="picker">
+      <div class="ph">เลือกขั้นตอน:</div>
+      <div class="plist">
+        <div class="pitem"><span class="pc">CL</span><span class="pn">ลูกค้ามุ่งหวัง</span><span class="pq">42</span></div>
+        <div class="pitem"><span class="pc">FO</span><span class="pn">ใบเปิดโอกาส</span><span class="pq">28</span></div>
+        <div class="pitem sel"><span class="pc">QT</span><span class="pn">ใบเสนอราคา</span><span class="pq">63</span></div>
+        <div class="pitem"><span class="pc">SO</span><span class="pn">ใบสั่งขาย</span><span class="pq">37</span></div>
+      </div>
+    </div>
+
+    <!-- WORKZONE: tabs + content (อยู่ขวาของคอลัมน์เลือกขั้นตอน) -->
+    <div class="workzone">
+
+      <!-- Tabs (separate-load per tab) -->
+      <div class="tabs">
+        <div class="tab">รอรับ <span class="badge">5</span></div>
+        <div class="tab active">รอดำเนินการ <span class="badge">9</span></div>
+        <div class="tab">ส่งออก <span class="badge">14</span></div>
+      </div>
+
+      <div class="content">
+
+    <!-- CENTER table -->
+    <div class="center">
+      <div class="chead">ใบเสนอราคา (QT) · <b>รอดำเนินการ</b> · 9 รายการ</div>
+      <div class="tablewrap">
+        <table class="grid">
+          <thead>
+            <tr>
+              <th>เอกสาร</th>
+              <th>ลูกค้า</th>
+              <th class="r">มูลค่า (฿)</th>
+              <th class="r">ค้าง (วัน)</th>
+              <th>ผู้รับผิดชอบ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="grp">
+              <td><span class="tcell"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>รวมทั้งหมด</span></td>
+              <td></td>
+              <td class="r num">2,790,800</td>
+              <td class="r"></td>
+              <td></td>
+            </tr>
+
+            <tr class="grp">
+              <td><span class="tcell lvl1"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>เกินกำหนด (3)</span></td>
+              <td></td>
+              <td class="r num">1,762,300</td>
+              <td class="r"></td>
+              <td></td>
+            </tr>
+            <tr class="sel">
+              <td><span class="tcell lvl2 docno">QT-2026-0605</span></td>
+              <td class="cust">บริษัท เอเชีย ฟู้ดส์ จำกัด</td>
+              <td class="r num">487,500</td>
+              <td class="r age bad">5</td>
+              <td>สมหญิง</td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0603</span></td>
+              <td class="cust">บริษัท ไทยสตีล โปรดักส์</td>
+              <td class="r num">1,250,000</td>
+              <td class="r age bad">6</td>
+              <td>ธนกฤต</td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0599</span></td>
+              <td class="cust">หจก. เจริญทรัพย์</td>
+              <td class="r num">24,800</td>
+              <td class="r age bad">7</td>
+              <td>สมหญิง</td>
+            </tr>
+
+            <tr class="grp">
+              <td><span class="tcell lvl1"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>ใกล้กำหนด (4)</span></td>
+              <td></td>
+              <td class="r num">812,300</td>
+              <td class="r"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0608</span></td>
+              <td class="cust">บริษัท เมกะ โฮม จำกัด</td>
+              <td class="r num">312,000</td>
+              <td class="r age warn">2</td>
+              <td>ปวีณา</td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0607</span></td>
+              <td class="cust">ร้าน สมชายการช่าง</td>
+              <td class="r num">86,500</td>
+              <td class="r age warn">2</td>
+              <td>ธนกฤต</td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0606</span></td>
+              <td class="cust">บริษัท นอร์ทเทิร์น โลจิสติกส์</td>
+              <td class="r num">298,400</td>
+              <td class="r age warn">1</td>
+              <td>ปวีณา</td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0604</span></td>
+              <td class="cust">บริษัท สยามเทค จำกัด</td>
+              <td class="r num">115,400</td>
+              <td class="r age warn">1</td>
+              <td>สมหญิง</td>
+            </tr>
+
+            <tr class="grp">
+              <td><span class="tcell lvl1"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>ปกติ (2)</span></td>
+              <td></td>
+              <td class="r num">216,200</td>
+              <td class="r"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0610</span></td>
+              <td class="cust">หจก. รุ่งเรืองพาณิชย์</td>
+              <td class="r num">158,800</td>
+              <td class="r age">0</td>
+              <td>ธนกฤต</td>
+            </tr>
+            <tr>
+              <td><span class="tcell lvl2 docno">QT-2026-0609</span></td>
+              <td class="cust">ร้าน บ้านสวนวัสดุ</td>
+              <td class="r num">57,400</td>
+              <td class="r age">0</td>
+              <td>ปวีณา</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RIGHT panel -->
+    <div class="right">
+      <div class="selbox">
+        <div class="sl"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>ช่วงเวลา</div>
+        <div class="sv">เดือนนี้ (มิ.ย. 2026)<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="selbox">
+        <div class="sl"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>ผู้รับผิดชอบ</div>
+        <div class="sv">ทั้งหมด<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+
+      <div class="chart-title">มูลค่าตามลูกค้า (Top 6)</div>
+      <div class="legend"><span><i class="lg-a"></i>ปิดได้</span><span><i class="lg-b"></i>คงค้าง</span></div>
+      <div class="bars">
+        <div class="brow"><div class="bl"><span>ไทยสตีล โปรดักส์</span><span class="num">1,250K</span></div><div class="bt"><span class="ba" style="width:30%"></span><span class="bb" style="width:70%"></span></div></div>
+        <div class="brow"><div class="bl"><span>เอเชีย ฟู้ดส์</span><span class="num">487K</span></div><div class="bt"><span class="ba" style="width:55%"></span><span class="bb" style="width:45%"></span></div></div>
+        <div class="brow"><div class="bl"><span>เมกะ โฮม</span><span class="num">312K</span></div><div class="bt"><span class="ba" style="width:80%"></span><span class="bb" style="width:20%"></span></div></div>
+        <div class="brow"><div class="bl"><span>นอร์ทเทิร์น โลจิสติกส์</span><span class="num">298K</span></div><div class="bt"><span class="ba" style="width:40%"></span><span class="bb" style="width:60%"></span></div></div>
+        <div class="brow"><div class="bl"><span>รุ่งเรืองพาณิชย์</span><span class="num">158K</span></div><div class="bt"><span class="ba" style="width:65%"></span><span class="bb" style="width:35%"></span></div></div>
+        <div class="brow"><div class="bl"><span>สยามเทค</span><span class="num">115K</span></div><div class="bt"><span class="ba" style="width:50%"></span><span class="bb" style="width:50%"></span></div></div>
+      </div>
+    </div>
+
+      </div><!-- /content -->
+    </div><!-- /workzone -->
+
+  </div>
+
+</body>
+</html>
