@@ -1,8 +1,0 @@
-[
-  {
-    "origin": ["https://idoc-3299c.web.app", "https://idoc-3299c.firebaseapp.com", "http://localhost:5174", "http://localhost:5173"],
-    "method": ["GET", "PUT", "HEAD"],
-    "responseHeader": ["Content-Type"],
-    "maxAgeSeconds": 3600
-  }
-]

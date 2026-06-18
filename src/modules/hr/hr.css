@@ -1,0 +1,66 @@
+/* ===== HR (บุคคล) — พนักงาน/ตำแหน่ง/แผนก/ฝ่าย ===== */
+.p-hr { display: flex; flex-direction: column; height: 100vh; }
+
+/* layout: เมนูซ้าย + เนื้อหา */
+.p-hr .hr-main { flex: 1; display: flex; min-height: 0; }
+.p-hr .hr-content { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.p-hr .hr-side { width: 224px; flex: none; background: #fff; border-right: 1px solid var(--line); padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; overflow: auto; }
+.p-hr .hr-side .side-title { font-size: 11px; font-weight: 700; color: var(--txt3); letter-spacing: .05em; padding: 6px 12px 8px; text-transform: uppercase; }
+.p-hr .hr-side .side-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 7px; font-size: 13.5px; color: var(--txt2); cursor: pointer; }
+.p-hr .hr-side .side-item:hover { background: var(--bg); }
+.p-hr .hr-side .side-item.active { background: #edf5ff; color: var(--blue); font-weight: 600; }
+.p-hr .hr-side .side-item.disabled { color: var(--txt3); cursor: default; }
+.p-hr .hr-side .side-item.disabled:hover { background: transparent; }
+.p-hr .hr-side .soon { margin-left: auto; font-size: 10px; background: var(--bg); color: var(--txt3); padding: 2px 7px; border-radius: 10px; }
+.p-hr .hr-side .side-divider { height: 1px; background: var(--line); margin: 8px 8px; }
+
+.p-hr .company-pick { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--txt2); }
+.p-hr .company-pick select { background: var(--field); border: none; border-bottom: 1px solid var(--field-bd); padding: 6px 10px; font-size: 13px; max-width: 260px; }
+
+.p-hr .hr-body { flex: 1; overflow: auto; padding: 18px 22px; background: var(--bg); }
+.p-hr .banner { padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.p-hr .banner.info { background: var(--blue-bg); color: var(--blue-d); }
+.p-hr .banner.err { background: var(--red-bg); color: var(--red); }
+
+.p-hr .card { background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+.p-hr .card .ch { padding: 12px 16px; font-weight: 600; font-size: 13.5px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+
+.p-hr .addform { padding: 14px 16px; border-bottom: 1px solid var(--line-soft); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; align-items: end; background: #fafbfc; }
+.p-hr .addform .full { grid-column: 1 / -1; }
+.p-hr .addform .actions { display: flex; align-items: center; }
+
+.p-hr .mods { display: flex; flex-wrap: wrap; gap: 8px; }
+.p-hr .modchk { display: flex; align-items: center; gap: 6px; font-size: 12.5px; border: 1px solid var(--line); border-radius: 20px; padding: 4px 11px; cursor: pointer; user-select: none; }
+.p-hr .modchk.on { background: var(--sel); border-color: #9cc3f0; color: var(--blue-d); font-weight: 500; }
+
+.p-hr .chips-sm { display: flex; gap: 4px; flex-wrap: wrap; }
+.p-hr .muted { color: var(--txt3); font-size: 12px; }
+.p-hr .empty-row td { text-align: center; color: var(--txt3); padding: 22px; }
+
+/* ===== mobile ===== */
+@media (max-width: 760px) {
+  /* เมนูซ้าย → แถบเลื่อนแนวนอนด้านบน */
+  .p-hr .hr-main { flex-direction: column; }
+  .p-hr .hr-side { width: auto; flex-direction: row; align-items: center; border-right: none; border-bottom: 1px solid var(--line); overflow-x: auto; padding: 8px 10px; gap: 6px; }
+  .p-hr .hr-side .side-title { display: none; }
+  .p-hr .hr-side .side-item { flex: none; white-space: nowrap; padding: 7px 12px; }
+  .p-hr .hr-side .side-item .soon { display: none; }
+
+  /* subbar พับได้ */
+  .p-hr .subbar { height: auto; flex-wrap: wrap; row-gap: 6px; padding: 8px 10px; }
+  .p-hr .subbar .company-pick { flex-basis: 100%; }
+
+  /* แท็บเลื่อนแนวนอน */
+  .p-hr .tabs { overflow-x: auto; }
+  .p-hr .tabs .tab { flex: none; white-space: nowrap; }
+
+  /* เนื้อหา + ตารางเลื่อนแนวนอนได้ */
+  .p-hr .hr-body { padding: 14px 12px; }
+  .p-hr .addform { grid-template-columns: 1fr; }
+  .p-hr .data-grid { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* จอเล็กมาก: ลดของในแถบบนสุด */
+@media (max-width: 520px) {
+  .p-hr .topbar .ic span { display: none; }
+}

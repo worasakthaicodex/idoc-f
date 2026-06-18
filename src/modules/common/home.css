@@ -1,0 +1,116 @@
+/* ===== Home (hub/launcher) ===== */
+.p-home { min-height: 100%; background: var(--bg); }
+
+/* hero */
+.p-home .hero {
+  background: linear-gradient(115deg, #0a3d62 0%, #1167a8 55%, #0e7ab8 100%);
+  color: #fff; padding: 30px 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  position: relative; overflow: hidden;
+}
+.p-home .hero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(255,255,255,.10), transparent 40%),
+    radial-gradient(circle at 70% 120%, rgba(255,255,255,.06), transparent 45%);
+}
+.p-home .brand { display: flex; align-items: center; gap: 18px; z-index: 1; }
+.p-home .brand .logo { color: #cfe6ff; }
+.p-home .brand h1 { font-size: 26px; font-weight: 600; }
+.p-home .brand .sub { font-size: 16px; color: #add4f5; margin-top: 2px; }
+.p-home .brand .tag { font-size: 12.5px; color: #d7e8f7; margin-top: 8px; opacity: .9; }
+.p-home .features { display: flex; gap: 36px; z-index: 1; }
+.p-home .feature { max-width: 200px; cursor: pointer; transition: transform .15s ease; }
+.p-home .feature:hover { transform: translateY(-2px); }
+.p-home .feature .fi { color: #cfe6ff; margin-bottom: 8px; }
+.p-home .feature h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.p-home .feature p { font-size: 12px; line-height: 1.5; color: #d2e6f6; }
+
+/* toolbar */
+.p-home .home-toolbar {
+  background: #fff; border-bottom: 1px solid var(--line); height: 56px;
+  display: flex; align-items: center; padding: 0 20px; gap: 16px;
+}
+.p-home .home-search { display: flex; align-items: center; gap: 10px; flex: 0 0 320px; color: var(--txt2); font-size: 14px; }
+.p-home .home-search input { border: none; outline: none; width: 100%; background: transparent; color: var(--txt); }
+.p-home .new-btn { display: flex; align-items: center; gap: 8px; color: var(--blue); font-weight: 500; font-size: 14px; cursor: pointer; }
+.p-home .tool-action { display: flex; align-items: center; gap: 7px; color: var(--txt2); font-size: 13.5px; cursor: pointer; }
+.p-home .tool-action:hover { color: var(--txt); }
+.p-home .divider-v { width: 1px; height: 22px; background: var(--line); }
+
+/* body */
+.p-home .body { display: flex; min-height: calc(100vh - 48px - 192px - 56px); }
+.p-home .sidebar { width: 210px; flex: none; background: #fff; border-right: 1px solid var(--line); padding: 14px 10px; display: flex; flex-direction: column; }
+.p-home .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 6px; font-size: 14px; color: var(--txt2); cursor: pointer; }
+.p-home .nav-item:hover { background: #f3f6f9; color: var(--txt); }
+.p-home .nav-item.active { background: var(--sel); color: var(--blue); font-weight: 500; }
+.p-home .sidebar .grow { flex: 1; }
+.p-home .new-folder { display: flex; align-items: center; gap: 8px; padding: 9px 12px; font-size: 13.5px; color: var(--txt2); border-top: 1px solid var(--line); margin-top: 8px; cursor: pointer; }
+
+.p-home .home-content { flex: 1; padding: 20px 26px; }
+.p-home .crumb { font-size: 14px; color: var(--blue); font-weight: 500; margin-bottom: 16px; }
+.p-home .tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
+.p-home .tile { background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; cursor: pointer; transition: box-shadow .15s ease, transform .15s ease, border-color .15s ease; }
+.p-home .tile:hover { box-shadow: 0 8px 22px rgba(17,103,168,.14); transform: translateY(-3px); border-color: #c7d8e8; }
+.p-home .thumb { height: 110px; display: grid; place-items: center; color: rgba(255,255,255,.95); }
+.p-home .t-blue { background: linear-gradient(135deg, #1167a8, #1c92d2); }
+.p-home .t-teal { background: linear-gradient(135deg, #0f8a8a, #2bb6a3); }
+.p-home .t-indigo { background: linear-gradient(135deg, #3a4a9c, #5a6fd0); }
+.p-home .t-amber { background: linear-gradient(135deg, #c47a14, #e0a32e); }
+.p-home .t-rose { background: linear-gradient(135deg, #a83a5b, #d05a7e); }
+.p-home .t-slate { background: linear-gradient(135deg, #4a5763, #6b7886); }
+.p-home .t-cyan { background: linear-gradient(135deg, #0e7490, #06b6d4); }
+.p-home .tile .meta { padding: 12px 14px 14px; }
+.p-home .tile .kind { font-size: 10.5px; letter-spacing: .6px; color: var(--txt2); text-transform: uppercase; }
+.p-home .tile .title { font-size: 14.5px; font-weight: 600; margin: 5px 0 8px; color: var(--txt); line-height: 1.3; }
+.p-home .tile .date { font-size: 11.5px; color: #9aa4b0; }
+
+/* responsive */
+@media (max-width: 880px) {
+  .p-home .hero { flex-direction: column; align-items: flex-start; gap: 24px; padding: 24px 22px; }
+  .p-home .features { gap: 28px; flex-wrap: wrap; }
+  .p-home .feature { max-width: none; flex: 1 1 220px; }
+  .p-home .body { flex-direction: column; min-height: 0; }
+  .p-home .sidebar { width: 100%; flex-direction: row; align-items: center; gap: 4px; padding: 8px 10px; border-right: none; border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .p-home .sidebar .grow, .p-home .new-folder { display: none; }
+  .p-home .nav-item { white-space: nowrap; }
+}
+@media (max-width: 560px) {
+  .p-home .features { gap: 12px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+  .p-home .feature { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 10px; padding: 12px; }
+  .p-home .home-toolbar { height: auto; flex-wrap: wrap; padding: 12px; }
+  .p-home .home-search { flex: 1 1 100%; }
+  .p-home .tile-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .p-home .thumb { height: 84px; }
+}
+
+/* ===== หน้าแรก: ผู้ใช้มุมขวา · ประเภท · ดาวโปรด · select filter/sort ===== */
+.p-home .me-wrap { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; padding: 0 10px 0 4px; line-height: 1.25; max-width: 220px; }
+.p-home .me-wrap .me-name { font-size: 13px; font-weight: 600; color: var(--txt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+.p-home .me-wrap .me-sub { font-size: 11px; color: var(--txt2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+
+.p-home .tool-action select { border: none; background: transparent; font: inherit; color: inherit; cursor: pointer; outline: none; padding: 2px 2px; }
+
+.p-home .tile { position: relative; }
+.p-home .tile-star { position: absolute; top: 8px; right: 8px; z-index: 2; border: none; background: rgba(255,255,255,.9); border-radius: 7px; width: 28px; height: 28px; display: grid; place-items: center; color: #c2cad6; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.p-home .tile-star:hover { color: #f5b301; }
+.p-home .tile-star.on { color: #f5b301; }
+
+.p-home .tile-section { margin-bottom: 26px; }
+.p-home .tile-section-h { font-size: 12.5px; font-weight: 700; color: var(--txt2); letter-spacing: .4px; text-transform: uppercase; margin: 0 0 12px; }
+
+.p-home .home-empty { padding: 40px 16px; text-align: center; color: var(--txt2); font-size: 14px; }
+
+/* ===== เมนูผู้ใช้ (ดรอปดาวน์ + logout) ===== */
+.p-home .me-menu { position: relative; }
+.p-home .me-trigger { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 0 8px 0 6px; height: 100%; }
+.p-home .me-trigger:hover { background: rgba(255,255,255,.06); }
+.p-home .me-chev { color: var(--txt2); transition: transform .15s ease; }
+.p-home .me-chev.open { transform: rotate(180deg); }
+.p-home .me-dd { position: absolute; top: calc(100% + 6px); right: 6px; z-index: 90; min-width: 210px; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,.18); overflow: hidden; }
+.p-home .me-dd-head { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.p-home .me-dd-name { font-size: 13.5px; font-weight: 600; color: var(--txt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.p-home .me-dd-sub { font-size: 11.5px; color: var(--txt2); margin-top: 2px; }
+.p-home .me-dd-item { display: flex; align-items: center; gap: 9px; padding: 11px 14px; font-size: 13.5px; color: var(--txt); cursor: pointer; }
+.p-home .me-dd-item:hover { background: var(--bg); }
+.p-home .me-dd-item.danger { color: var(--red); }

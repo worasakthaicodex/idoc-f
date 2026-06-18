@@ -1,0 +1,262 @@
+/* ============================================================
+   Shared components (ใช้ซ้ำหลายหน้า) — IBM Carbon style
+   ============================================================ */
+
+/* ---------- Top black bar ---------- */
+.topbar {
+  height: var(--h-topbar);
+  background: var(--black);
+  color: #f4f4f4;
+  display: flex;
+  align-items: center;
+}
+.topbar .ham { width: 48px; height: 48px; display: grid; place-items: center; cursor: pointer; }
+.topbar .ham:hover { background: #292929; }
+.topbar .app { font-weight: 600; font-size: 14px; padding: 0 14px; white-space: nowrap; }
+.topbar .sep { width: 1px; height: 24px; background: #525252; }
+.topbar .doctitle { color: #c6c6c6; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.topbar .ic { width: 48px; height: 48px; display: grid; place-items: center; color: #c6c6c6; cursor: pointer; }
+.topbar .ic:hover { background: #292929; }
+.topbar .me { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 600; margin: 0 12px; }
+.topbar .qtag { width: 48px; height: 48px; display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #fff; }
+
+/* ===== select สลับโมดูลเร็ว (CL ⇄ ใบขอแก้ไข ⇄ FO) — ปุ่ม = .ic "งานขาย" บนแถบบน ===== */
+.crossnav-wrap { position: relative; display: inline-flex; }
+.crossnav-chip { user-select: none; }
+.crossnav-chip span { max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.crossnav-menu {
+  position: absolute; top: 100%; left: 0; min-width: 230px; max-width: 320px; z-index: 60;
+  background: var(--black); color: #f4f4f4; border: 1px solid #3a3a3a;
+  border-radius: 0; box-shadow: 0 12px 32px rgba(0,0,0,.4); padding: 4px 0;
+}
+.crossnav-menu .it {
+  padding: 9px 14px; font-size: 13px; cursor: pointer; color: #e4e4e4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.crossnav-menu .it:hover { background: #292929; }
+.crossnav-menu .it.on { color: #6ea8ff; font-weight: 600; }
+
+/* ===== กระดิ่งแจ้งเตือน (ใช้ในแถบบน) ===== */
+.notif { position: relative; }
+.notif .notif-bell { position: relative; }
+.notif .notif-dot { position: absolute; top: 8px; right: 7px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 9px; background: #e8341c; color: #fff; font-size: 10px; font-weight: 700; line-height: 16px; text-align: center; box-shadow: 0 0 0 2px #1f1f1f; }
+.notif .notif-pop { position: absolute; top: 50px; right: 4px; width: 320px; max-height: min(420px, calc(100vh - 70px)); display: flex; flex-direction: column; overflow: hidden; background: #fff; color: var(--txt); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.18); z-index: 50; }
+.notif .notif-head { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 13px 16px; font-weight: 700; font-size: 14px; border-bottom: 1px solid var(--line); }
+.notif .notif-readall { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--blue); cursor: pointer; }
+.notif .notif-readall:hover { text-decoration: underline; }
+.notif .notif-item.read { opacity: 0.55; }
+.notif .notif-empty { padding: 26px 16px; text-align: center; color: var(--txt3); font-size: 13px; }
+.notif .notif-foot { flex: 0 0 auto; padding: 11px 16px; text-align: center; font-size: 13px; color: var(--blue); font-weight: 600; cursor: pointer; border-top: 1px solid var(--line); }
+.notif .notif-foot:hover { background: var(--bg); }
+.notif .notif-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 4px 0; }
+.notif .notif-item { padding: 10px 16px; cursor: pointer; border-bottom: 1px solid var(--line-soft); }
+.notif .notif-item:last-child { border-bottom: none; }
+.notif .notif-item:hover { background: var(--bg); }
+.notif .notif-kind { font-size: 11px; color: var(--blue); font-weight: 600; margin-bottom: 2px; }
+.notif .notif-main { font-size: 13.5px; font-weight: 600; color: var(--txt); }
+.notif .notif-sub { font-size: 12.5px; color: var(--txt2); margin-top: 1px; }
+
+/* ---------- Language switcher (TH/EN) ---------- */
+.lang-switch { display: inline-flex; border: 1px solid var(--field-bd); border-radius: 7px; overflow: hidden; }
+.lang-switch button { border: none; background: #fff; color: var(--txt2); font-size: 12.5px; font-weight: 600; padding: 5px 10px; cursor: pointer; line-height: 1; }
+.lang-switch button + button { border-left: 1px solid var(--field-bd); }
+.lang-switch button:hover { background: var(--bg); }
+.lang-switch button.on { background: var(--blue); color: #fff; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13.5px; font-weight: 500;
+  padding: 8px 14px; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--line); background: #fff; color: var(--txt2);
+}
+.btn:hover { background: var(--bg); }
+.btn svg { width: 16px; height: 16px; }
+.btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn.primary:hover { background: var(--blue-d); }
+.btn-dark { width: 100%; background: var(--black); color: #fff; border: none; padding: 10px; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-dark:hover { background: #393939; }
+
+/* ---------- Carbon form field ---------- */
+.field { margin-bottom: 14px; display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 12px; }
+.field > label { font-size: 12.5px; color: var(--txt2); text-align: right; }
+.field.top { align-items: start; }
+.field.top > label { margin-top: 8px; }
+.ctrl { position: relative; }
+.ctrl input, .ctrl select, .ctrl textarea {
+  width: 100%; background: var(--field); border: none; border-bottom: 1px solid var(--field-bd);
+  padding: 9px 11px; font-size: 13.5px; color: var(--txt); border-radius: 0;
+}
+.ctrl select { appearance: none; }
+.ctrl textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+.ctrl input:focus, .ctrl select:focus, .ctrl textarea:focus { outline: 2px solid var(--blue); outline-offset: -2px; border-bottom-color: transparent; }
+.ctrl input.amt { text-align: right; font-variant-numeric: tabular-nums; }
+.ctrl .pick { position: absolute; right: 0; top: 0; height: 100%; width: 34px; display: grid; place-items: center; color: var(--blue); cursor: pointer; pointer-events: none; }
+
+/* compact stacked field (right panels) */
+.field-sm { margin-bottom: 12px; }
+.field-sm label { display: block; font-size: 12px; color: var(--txt2); margin-bottom: 5px; }
+.field-sm input, .field-sm select, .field-sm textarea { width: 100%; background: var(--field); border: none; border-bottom: 1px solid var(--field-bd); padding: 8px 10px; font-size: 13px; }
+.field-sm input:focus, .field-sm select:focus, .field-sm textarea:focus { outline: 2px solid var(--blue); outline-offset: -2px; }
+.ef-readval { font-size: 13px; color: var(--txt); padding: 8px 10px; background: var(--field); border-bottom: 1px solid var(--field-bd); min-height: 35px; white-space: pre-wrap; word-break: break-word; }
+
+/* ---------- Chips ---------- */
+.chip { display: inline-block; font-size: 11px; padding: 1px 9px; border-radius: 12px; font-weight: 500; }
+.chip.green { background: var(--green-bg); color: #0e6027; }
+.chip.amber { background: var(--amber-bg); color: var(--amber); }
+.chip.red { background: var(--red-bg); color: var(--red); }
+.chip.blue { background: var(--blue-bg); color: var(--blue-d); }
+.chip.gray { background: var(--bg); color: var(--txt2); }
+
+/* ---------- Underline tabs ---------- */
+.tabs { display: flex; background: #fff; border-bottom: 1px solid var(--line); padding: 0 8px; }
+.tab { padding: 12px 18px 10px; font-size: 14px; color: var(--txt2); cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+.tab:hover { background: var(--bg); }
+.tab.active { color: var(--txt); font-weight: 600; border-bottom-color: var(--blue); }
+.tab .badge { font-size: 11px; background: var(--bg); color: var(--txt2); padding: 1px 7px; border-radius: 10px; font-weight: 600; }
+.tab.active .badge { background: var(--selrow); color: var(--blue-d); }
+
+/* ---------- Data grid (tree table) ---------- */
+.data-grid { width: 100%; border-collapse: collapse; }
+.data-grid th { position: sticky; top: 0; background: var(--bg); text-align: left; font-weight: 600; color: var(--txt2); font-size: 12px; padding: 9px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.data-grid th.r, .data-grid td.r { text-align: right; }
+.data-grid td { padding: 8px 14px; border-bottom: 1px solid var(--line-soft); font-size: 13.5px; white-space: nowrap; }
+.data-grid tr:hover td { background: #f8f9fb; }
+.data-grid tr.grp td { font-weight: 600; background: #fafafa; }
+.data-grid tr.grp:hover td { background: #f3f4f6; }
+.data-grid tr.sel td { background: var(--selrow); }
+.data-grid tr.sel:hover td { background: #bcd4fb; }
+.tcell { display: flex; align-items: center; gap: 6px; }
+.tcell .chev { width: 14px; height: 14px; color: var(--txt2); flex: none; transition: transform .12s; }
+.tcell .chev.col { transform: rotate(-90deg); }
+.lvl1 { padding-left: 14px; }
+.lvl2 { padding-left: 38px; }
+.docno { color: var(--blue); font-weight: 500; }
+
+/* ---------- Stepper ---------- */
+.stepper { display: flex; align-items: center; background: #fff; border-bottom: 1px solid var(--line); padding: 10px 18px; gap: 10px; }
+.step { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--txt2); }
+.step .sn { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 600; background: var(--line); color: var(--txt2); }
+.step .sn svg { width: 13px; height: 13px; }
+.step.done { color: var(--txt); }
+.step.done .sn { background: var(--green); color: #fff; }
+.step.cur { color: var(--txt); font-weight: 600; }
+.step.cur .sn { background: var(--blue); color: #fff; }
+.stepline { flex: 1; height: 1px; background: var(--line); max-width: 120px; }
+
+/* ---------- Helper side panel + rail (เช่นหน้าเอกสาร) ---------- */
+.rightwrap { display: flex; flex: none; }
+.hpanel { width: 368px; border-left: 1px solid var(--line); background: #fff; display: flex; flex-direction: column; transition: width .15s ease; overflow: hidden; }
+.hpanel.closed { width: 0; border-left: none; }
+.hpanel .hh { height: 42px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px; border-bottom: 1px solid var(--line); font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+.hpanel .hh .x { width: 28px; height: 28px; display: grid; place-items: center; color: var(--txt2); cursor: pointer; border-radius: 4px; }
+.hpanel .hh .x:hover { background: var(--bg); }
+.hbody { flex: 1; overflow: auto; padding: 14px 16px; }
+
+.rail { width: 64px; flex: none; border-left: 1px solid var(--line); background: #fafafa; display: flex; flex-direction: column; padding: 6px 0; }
+.ritem { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 4px; cursor: pointer; color: var(--txt2); border-left: 3px solid transparent; text-align: center; }
+.ritem:hover { background: var(--hover); }
+.ritem.active { color: var(--blue); border-left-color: var(--blue); background: #fff; }
+.ritem svg { width: 20px; height: 20px; }
+.ritem span { font-size: 10.5px; line-height: 1.25; }
+.ribadge { display: inline-block; min-width: 16px; padding: 0 4px; background: var(--red); color: #fff; border-radius: 8px; font-size: 9.5px; line-height: 15px; }
+
+/* helper content bits */
+.kv { display: flex; flex-direction: column; gap: 11px; }
+.kv .r { display: grid; grid-template-columns: 96px 1fr; gap: 10px; font-size: 13px; }
+.kv .r .k { color: var(--txt2); }
+.mini-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin: 4px 0 14px; }
+.mini-tabs .mt { font-size: 12px; padding: 7px 10px; color: var(--txt2); cursor: pointer; border-bottom: 2px solid transparent; }
+.mini-tabs .mt.on { color: var(--txt); font-weight: 600; border-bottom-color: var(--blue); }
+
+.loglist { display: flex; flex-direction: column; }
+.logitem { padding: 11px 0; border-bottom: 1px solid var(--line-soft); font-size: 12.5px; }
+.logitem .lt { display: flex; justify-content: space-between; color: var(--txt3); font-size: 11.5px; margin-bottom: 4px; }
+.logitem .lb { color: var(--txt); line-height: 1.5; }
+.logitem .ls { margin-top: 5px; font-size: 11.5px; }
+.logitem .ls b { color: var(--amber); }
+
+.att { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid var(--line); margin-bottom: 8px; border-radius: 4px; }
+.att svg { width: 20px; height: 20px; color: var(--blue); flex: none; }
+.att .an { font-size: 13px; }
+.att .am { font-size: 11px; color: var(--txt3); }
+.upload { border: 1px dashed var(--line); border-radius: 4px; padding: 18px; text-align: center; color: var(--txt2); font-size: 12.5px; cursor: pointer; }
+.upload:hover { background: var(--bg); }
+
+.review { display: flex; flex-direction: column; gap: 10px; }
+.rcheck { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); }
+.rcheck svg { width: 17px; height: 17px; }
+.rcheck .ok { color: var(--green); }
+.rcheck .miss { color: var(--red); }
+
+/* ---------- Work shell (sub toolbar + layout + stage picker) ---------- */
+.subbar { height: 44px; background: #fff; border-bottom: 1px solid var(--line); display: flex; align-items: center; padding: 0 8px; }
+.subbar .tb { width: 40px; height: 40px; display: grid; place-items: center; color: var(--txt2); cursor: pointer; }
+.subbar .tb:hover { background: var(--bg); }
+.subbar .vsep { width: 1px; height: 22px; background: var(--line); margin: 0 6px; }
+.subbar .fields { display: flex; align-items: center; gap: 8px; color: var(--blue); font-size: 13.5px; padding: 0 14px; cursor: pointer; }
+
+.layout { display: flex; flex: 1; min-height: 0; }
+.workzone { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.content { flex: 1; min-height: 0; display: flex; }
+
+.picker { width: 196px; flex: none; border-right: 1px solid var(--line); display: flex; flex-direction: column; background: #fff; }
+.picker .ph { padding: 14px 16px 8px; font-size: 13px; font-weight: 600; color: var(--txt); }
+.picker .plist { overflow-y: auto; flex: 1; }
+.pitem { padding: 9px 16px; cursor: pointer; display: flex; align-items: baseline; gap: 8px; border-left: 2px solid transparent; }
+.pitem:hover { background: var(--hover); }
+.pitem.sel { background: var(--line); border-left-color: var(--blue); }
+.pc { font-size: 13.5px; font-weight: 600; color: var(--txt); min-width: 22px; }
+.pn { font-size: 13px; color: var(--txt2); }
+.pitem.sel .pn { color: var(--txt); }
+.pq { margin-left: auto; font-size: 12px; color: var(--txt3); }
+
+@media (max-width: 980px) {
+  .layout { flex-direction: column; }
+  .picker { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+  .picker .plist { display: flex; overflow-x: auto; }
+  .pitem { flex: none; border-left: none; border-bottom: 2px solid transparent; }
+  .pitem.sel { border-left: none; border-bottom-color: var(--blue); }
+  .pq { display: none; }
+  .content { flex-direction: column; }
+}
+
+/* ---------- Document toolbar (หน้าเต็ม) ---------- */
+.toolbar { height: var(--h-toolbar); background: #fff; border-bottom: 1px solid var(--line); display: flex; align-items: center; padding: 0 6px; }
+.tbtn { min-width: 58px; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--txt2); cursor: pointer; border-radius: 4px; position: relative; padding: 0 6px; }
+.tbtn:hover { background: var(--bg); }
+.tbtn svg { width: 20px; height: 20px; }
+.tbtn span { font-size: 11px; }
+.tbtn.disabled { opacity: .5; pointer-events: none; }
+.tbtn.primary svg, .tbtn.primary span { color: var(--blue); }
+.tbtn.danger svg, .tbtn.danger span { color: var(--red); }
+.tbtn .dot { position: absolute; top: 8px; right: 12px; width: 7px; height: 7px; background: var(--green); border-radius: 50%; }
+.tbsep { width: 1px; height: 34px; background: var(--line); margin: 0 8px; }
+
+/* ---------- Documents tree (ซ้าย, ยุบได้) ---------- */
+.dtree { width: 210px; flex: none; border-right: 1px solid var(--line); display: flex; flex-direction: column; transition: width .15s ease; overflow: hidden; }
+.dtree .th { height: 38px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px 0 14px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--txt2); white-space: nowrap; }
+.dtree .collapse-btn { width: 28px; height: 28px; display: grid; place-items: center; color: var(--txt2); cursor: pointer; border-radius: 4px; }
+.dtree .collapse-btn:hover { background: var(--bg); }
+.dtree .tlist { flex: 1; overflow: auto; padding: 6px 0; }
+.titem { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
+.titem:hover { background: var(--hover); }
+.titem.sel { background: var(--line); border-left: 2px solid var(--blue); padding-left: 12px; }
+.titem svg { width: 16px; height: 16px; flex: none; }
+.titem.fo svg { color: var(--amber); }
+.titem.qt svg { color: var(--green); }
+.titem.so svg { color: var(--blue); }
+.titem.cl svg { color: var(--purple, #8a3ffc); }
+.titem.cl svg { color: var(--purple); }
+.dtree.collapsed { width: 38px; }
+.dtree.collapsed .th span, .dtree.collapsed .tlist { display: none; }
+.dtree.collapsed .th { justify-content: center; padding: 0; }
+.dtree.collapsed .collapse-btn svg { transform: rotate(180deg); }
+@media (max-width: 900px) { .dtree, .dtree.collapsed { width: 100%; border-right: none; border-bottom: 1px solid var(--line); } }
+
+/* ช่องที่อยู่แบบค้นหา (ThaiAddressInput) — สไตล์กลาง ใช้ได้ทุกหน้า (ลูกค้า/HR ฯลฯ) */
+.ta-box { position: relative; }
+.ta-menu { position: absolute; z-index: 60; left: 0; right: 0; top: 100%; margin-top: 4px; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.16); max-height: 320px; overflow-y: auto; padding: 4px; }
+.ta-item { padding: 10px 12px; font-size: 13.5px; line-height: 1.35; color: var(--txt); cursor: pointer; border-radius: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ta-item + .ta-item { border-top: 1px solid var(--line-soft); }
+.ta-item:hover { background: var(--sel); border-radius: 7px; }

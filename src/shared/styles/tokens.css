@@ -1,0 +1,58 @@
+/* ============================================================
+   Design Tokens — iDoc ERP (IBM Carbon inspired)
+   ปรับสี/ระยะที่นี่ที่เดียว มีผลทั้งระบบ
+   ============================================================ */
+:root {
+  /* brand / accent */
+  --black: #161616;
+  --blue: #0f62fe;
+  --blue-d: #0043ce;
+
+  /* text */
+  --txt: #161616;
+  --txt2: #525252;
+  --txt3: #6f6f6f;
+
+  /* lines / surfaces */
+  --line: #e0e0e0;
+  --line-soft: #f0f0f0;
+  --bg: #f4f4f4;
+  --surface: #ffffff;
+
+  /* states */
+  --sel: #edf5ff;
+  --selrow: #d0e2ff;
+  --hover: #e8e8e8;
+
+  /* form fields (Carbon filled style) */
+  --field: #f4f4f4;
+  --field-bd: #8d8d8d;
+
+  /* status colors */
+  --green: #24a148;
+  --amber: #b28600;
+  --red: #da1e28;
+  --purple: #8a3ffc;
+  --teal: #007d79;
+
+  /* status chip backgrounds */
+  --green-bg: #defbe6;
+  --amber-bg: #fdf6dd;
+  --red-bg: #fff1f1;
+  --blue-bg: #edf5ff;
+
+  /* typography */
+  --font: "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+
+  /* spacing scale */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+
+  /* chrome heights */
+  --h-topbar: 48px;
+  --h-toolbar: 60px;
+}

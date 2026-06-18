@@ -1,0 +1,151 @@
+/* ===== QT detail (เปิดเอกสารใบเสนอราคา) ===== */
+.p-qt { display: flex; flex-direction: column; height: 100vh; }
+
+/* toolbar */
+.p-qt .toolbar { height: var(--h-toolbar); background: #fff; border-bottom: 1px solid var(--line); display: flex; align-items: center; padding: 0 6px; }
+.p-qt .tbtn { min-width: 58px; height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--txt2); cursor: pointer; border-radius: 4px; position: relative; padding: 0 6px; }
+.p-qt .tbtn:hover { background: var(--bg); }
+.p-qt .tbtn svg { width: 20px; height: 20px; }
+.p-qt .tbtn span { font-size: 11px; }
+.p-qt .tbtn.primary svg, .p-qt .tbtn.primary span { color: var(--blue); }
+.p-qt .tbtn .dot { position: absolute; top: 8px; right: 12px; width: 7px; height: 7px; background: var(--green); border-radius: 50%; }
+.p-qt .tbsep { width: 1px; height: 34px; background: var(--line); margin: 0 8px; }
+
+/* main — toolbar อยู่ใน workzone แล้ว เมนูซ้ายจึงชิดบนเต็มความสูง */
+.p-qt .main { display: flex; height: calc(100vh - var(--h-topbar)); }
+.p-qt .dtree .th { height: var(--h-toolbar); }   /* หัวเมนูซ้ายเสมอ toolbar → เส้นล่างตรงแนวกัน */
+.p-qt .workzone { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.p-qt .content { flex: 1; min-height: 0; display: flex; background: var(--bg); }   /* พื้นเทา → แยกการ์ดออกจากเมนู */
+
+/* left documents tree */
+.p-qt .dtree { width: 210px; flex: none; border-right: 1px solid var(--line); display: flex; flex-direction: column; transition: width .15s ease; overflow: hidden; }
+.p-qt .dtree .th { height: 38px; display: flex; align-items: center; justify-content: space-between; padding: 0 6px 0 14px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--txt2); white-space: nowrap; }
+.p-qt .collapse-btn { width: 28px; height: 28px; display: grid; place-items: center; color: var(--txt2); cursor: pointer; border-radius: 4px; }
+.p-qt .collapse-btn:hover { background: var(--bg); }
+.p-qt .tlist { flex: 1; overflow: auto; padding: 6px 0; }
+.p-qt .titem { display: flex; align-items: center; gap: 8px; padding: 8px 14px; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
+.p-qt .titem:hover { background: var(--hover); }
+.p-qt .titem.sel { background: var(--line); border-left: 2px solid var(--blue); padding-left: 12px; }
+.p-qt .titem svg { width: 16px; height: 16px; flex: none; }
+.p-qt .titem.fo svg { color: var(--amber); }
+.p-qt .titem.qt svg { color: var(--green); }
+.p-qt .titem.child { padding-left: 30px; position: relative; color: var(--txt2); font-size: 12px; }
+.p-qt .titem.child::before { content: "└"; position: absolute; left: 15px; color: var(--txt3); }
+.p-qt .titem.child svg { color: var(--blue); }
+.p-qt .dtree.collapsed { width: 38px; }
+.p-qt .dtree.collapsed .th span, .p-qt .dtree.collapsed .tlist { display: none; }
+.p-qt .dtree.collapsed .th { justify-content: center; padding: 0; }
+.p-qt .dtree.collapsed .collapse-btn svg { transform: rotate(180deg); }
+
+/* center form — การ์ดขาวลอยบนพื้นเทา มีระยะเว้นรอบด้าน (ไม่ชนเมนู) */
+.p-qt .center { flex: 1; min-width: 0; overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 10px; margin: 16px; padding: 22px 28px; }
+.p-qt .sect { margin-bottom: 22px; }
+.p-qt .sect .sh { font-size: 13px; font-weight: 600; color: var(--txt); padding-bottom: 8px; margin-bottom: 14px; border-bottom: 1px solid var(--line); }
+.p-qt .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+/* multi-select แบบชิป (ฟอร์ม FO บนเปลือก p-qt) */
+.p-qt .ms-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.p-qt .ms-chip { border: 1px solid var(--field-bd); background: #fff; color: var(--txt2); font-size: 12.5px; padding: 5px 11px; border-radius: 14px; cursor: pointer; }
+.p-qt .ms-chip:hover { border-color: var(--blue); color: var(--blue); }
+.p-qt .ms-chip.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+/* items table */
+.p-qt .items { width: 100%; border-collapse: collapse; }
+.p-qt .items th { background: var(--bg); text-align: left; font-size: 12px; font-weight: 600; color: var(--txt2); padding: 9px 10px; border: 1px solid var(--line); white-space: nowrap; }
+.p-qt .items th.r, .p-qt .items td.r { text-align: right; }
+.p-qt .items th.c, .p-qt .items td.c { text-align: center; }
+.p-qt .items td { padding: 7px 10px; border: 1px solid var(--line); font-size: 13.5px; }
+.p-qt .items input, .p-qt .items select { width: 100%; border: 1px solid transparent; background: transparent; font-size: 13.5px; padding: 4px 6px; }
+.p-qt .items input:focus, .p-qt .items select:focus { outline: none; border-color: var(--blue); background: #fff; }
+.p-qt .items input.r { text-align: right; font-variant-numeric: tabular-nums; }
+.p-qt .items .addrow { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: var(--blue); font-size: 13px; cursor: pointer; }
+.p-qt .items .addrow:hover { background: var(--sel); }
+
+.p-qt .totals { margin-top: 14px; margin-left: auto; width: 340px; }
+.p-qt .trow { display: flex; justify-content: space-between; padding: 7px 12px; font-size: 13.5px; }
+.p-qt .trow.grand { background: var(--bg); font-weight: 700; font-size: 15px; border-top: 2px solid var(--black); }
+
+/* ปิดการขาย — เลือกผล won/lost + ข้อความ */
+.p-qt .close-seg { display: flex; gap: 8px; margin-bottom: 14px; }
+.p-qt .close-seg button { flex: 1; padding: 10px; border: 1px solid var(--line); background: #fff; border-radius: 8px; font-size: 13.5px; cursor: pointer; color: var(--txt2); }
+.p-qt .close-seg button.on.won { background: #e7f5ec; border-color: #1f7a44; color: #1f7a44; font-weight: 600; }
+.p-qt .close-seg button.on.lost { background: #fdeaea; border-color: var(--red); color: var(--red); font-weight: 600; }
+.p-qt .close-seg.so3 button { font-size: 12.5px; padding: 9px 6px; }
+.p-qt .close-note { font-size: 11.5px; color: #ad6800; background: #fff7e6; border: 1px solid #ffd591; border-radius: 6px; padding: 7px 9px; margin-top: 4px; }
+.p-qt .close-err { font-size: 12.5px; color: var(--red); background: var(--red-bg, #fdeaea); border-radius: 6px; padding: 8px 10px; margin-top: 10px; }
+.p-qt .opt-chip.on { background: #e7f0ff; }
+
+/* ตารางย่อย 2 โหมด: ดูสรุป / ตาราง */
+.p-qt .qt-mode { display: inline-flex; gap: 2px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 2px; }
+.p-qt .qt-mode button { border: none; background: transparent; font-size: 12px; padding: 4px 12px; border-radius: 6px; cursor: pointer; color: var(--txt2); font-weight: 500; }
+.p-qt .qt-mode button.on { background: #fff; color: var(--blue); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+
+/* ลูกค้าที่เลือกมาแล้ว (เช่นจาก CL) — ชิปเลือกแล้ว + ปุ่มเปลี่ยน */
+.p-qt .cust-locked { display: flex; align-items: center; gap: 8px; }
+.p-qt .cust-locked .cl-pill { background: #e7f5ec; color: #1f7a44; border: 1px solid #b7e0c5; border-radius: 6px; padding: 6px 10px; font-size: 13px; flex: 1; min-width: 0; }
+.p-qt .cust-locked .cl-change { border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 5px 10px; font-size: 12px; color: var(--txt2); cursor: pointer; flex: none; }
+.p-qt .cust-locked .cl-change:hover { background: var(--bg); }
+
+/* แจ้งเตือน "ลูกค้ากำลังอยู่ระหว่างการขาย" (มี FO/QT/SO ยังไม่ปิด) */
+.p-qt .dup-warn { background: #fff7e6; border: 1px solid #ffd591; border-radius: 8px; padding: 10px 12px; margin-bottom: 16px; }
+.p-qt .dup-warn .dw-h { font-size: 13px; font-weight: 600; color: #ad6800; }
+.p-qt .dup-warn .dw-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.p-qt .dup-warn .dw-chip { border: 1px solid #ffd591; background: #fff; color: #ad6800; border-radius: 999px; padding: 4px 11px; font-size: 12px; cursor: pointer; }
+.p-qt .dup-warn .dw-chip:hover { background: #fff1d6; }
+
+/* แผงทำงานลูกค้าใช้ร่วม (CustomerWorkPanel) ในแผงขวาเอกสาร — หน้าตาเดียวกับแผงขวา CL */
+.cwp { display: flex; flex-direction: column; min-height: 0; }
+.cwp .ld-head.compact { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 2px 12px; border-bottom: 1px solid var(--line); }
+.cwp .ld-head.compact .nm { font-size: 14.5px; font-weight: 600; }
+.cwp .rt-tabs { display: flex; gap: 2px; overflow-x: auto; border-bottom: 1px solid var(--line); margin: 0 -4px; padding: 0 4px; }
+.cwp .rt-tabs button { flex: none; border: none; background: transparent; font-size: 12.5px; padding: 9px 9px; cursor: pointer; color: var(--txt2); border-bottom: 2px solid transparent; white-space: nowrap; }
+.cwp .rt-tabs button:hover { color: var(--txt); }
+.cwp .rt-tabs button.on { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
+.cwp .rt-body { padding: 12px 2px; overflow: auto; }
+.cwp .ct-h { font-size: 11.5px; font-weight: 600; color: var(--txt2); text-transform: uppercase; letter-spacing: .03em; margin: 14px 0 6px; }
+.cwp .ct-h:first-child { margin-top: 0; }
+.cwp .acts-hint { font-size: 11px; color: var(--txt3); margin-top: 8px; line-height: 1.5; }
+.cwp .ph-note { font-size: 12.5px; color: var(--txt3); padding: 20px 4px; text-align: center; }
+.cwp .rt-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 10px 0 2px; border-top: 1px solid var(--line); margin-top: 10px; }
+.cwp .rt-foot .btn.sm { padding: 5px 10px; font-size: 12px; gap: 5px; }
+.cwp .appt-acts { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.cwp .lnk { border: none; background: none; cursor: pointer; color: var(--blue); padding: 4px; display: inline-grid; place-items: center; border-radius: 5px; }
+.cwp .lnk:hover { background: var(--bg); }
+.cwp .lnk.del { color: var(--red); }
+/* แผงขวาให้กว้างขึ้นเมื่อเปิดแท็บลูกค้า (ตารางข้อมูลเยอะ) */
+.p-qt .hpanel.wide { width: 552px; }
+
+/* responsive */
+@media (max-width: 1100px) { .p-qt .hpanel { width: 345px; } .p-qt .hpanel.wide { width: 480px; } }
+@media (max-width: 900px) {
+  .p-qt .main { height: auto; flex-direction: column; }
+  .p-qt .dtree, .p-qt .dtree.collapsed { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+  .p-qt .cols2 { grid-template-columns: 1fr; gap: 0; }
+  .p-qt .content { flex-direction: column; }
+  .p-qt .rightwrap { width: 100%; }
+  .p-qt .hpanel { flex: 1; }
+  .p-qt .totals { width: 100%; }
+  .p-qt .field { grid-template-columns: 110px 1fr; }
+}
+
+/* ===== FLOW popup (ใคร → ไปหาใคร → ขั้นไหน) ===== */
+.p-qt .wf-flow-ov { position: fixed; inset: 0; background: rgba(0,0,0,.38); display: grid; place-items: center; z-index: 100; padding: 20px; }
+.p-qt .wf-flow-card { background: #fff; border-radius: 14px; width: 540px; max-width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.25); overflow: hidden; }
+.p-qt .wf-flow-h { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 700; }
+.p-qt .wf-flow-h .x { width: 30px; height: 30px; border: none; background: none; border-radius: 6px; display: grid; place-items: center; color: var(--txt2); cursor: pointer; }
+.p-qt .wf-flow-h .x:hover { background: var(--bg); }
+.p-qt .wf-flow-b { padding: 20px 18px; }
+.p-qt .wf-flow-line { display: flex; align-items: stretch; gap: 10px; }
+.p-qt .wf-flow-node { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 5px; background: var(--bg); }
+.p-qt .wf-flow-node.to { background: #edf5ff; border-color: #b8d6f5; }
+.p-qt .wf-flow-node .lbl { font-size: 11px; color: var(--txt3); text-transform: uppercase; letter-spacing: .04em; }
+.p-qt .wf-flow-node .who { font-size: 15px; font-weight: 700; color: var(--txt); }
+.p-qt .wf-flow-node .stg { font-size: 12.5px; color: var(--txt2); }
+.p-qt .wf-flow-arrow { display: grid; place-items: center; color: var(--blue); flex: none; }
+.p-qt .wf-flow-meta { margin-top: 14px; font-size: 13px; color: var(--txt2); }
+.p-qt .wf-flow-warn { margin-top: 12px; font-size: 12.5px; color: var(--amber, #b28600); background: var(--amber-bg); padding: 8px 11px; border-radius: 8px; }
+.p-qt .wf-flow-f { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--line); }
+.p-qt .wf-flow-f .btn { padding: 8px 16px; }
+
+/* ปุ่มดึงกลุ่มออกเป็นกล่องลอย (ที่แท็บฟอร์ม) */
+.p-qt .tabs .tab .tab-pop { margin-left: 7px; font-size: 12px; color: var(--txt3); cursor: pointer; padding: 0 3px; border-radius: 4px; }
+.p-qt .tabs .tab .tab-pop:hover { color: var(--blue); background: var(--sel); }

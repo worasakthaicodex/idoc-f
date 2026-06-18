@@ -1,0 +1,4 @@
+# iDoc ERP เป็นระบบหลังบ้านภายใน — ห้าม search engine / bot ทุกตัวไต่หรือ render
+# (Googlebot ไต่หน้า SPA แล้ว JS เปิดสตรีม /api/events ค้าง 40 วิ จน Cloud Run ล่ม)
+User-agent: *
+Disallow: /

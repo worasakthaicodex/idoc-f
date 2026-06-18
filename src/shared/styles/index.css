@@ -1,0 +1,4 @@
+/* central stylesheet entry — import ครั้งเดียวที่ main.tsx */
+@import "./tokens.css";
+@import "./base.css";
+@import "./components.css";

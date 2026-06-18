@@ -1,0 +1,36 @@
+/* ============================================================
+   Base / reset / typography / scrollbar (ใช้ทั้งระบบ)
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: var(--font);
+  color: var(--txt);
+  background: var(--surface);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+input, select, textarea { font: inherit; }
+
+/* utility */
+.num { font-variant-numeric: tabular-nums; }
+.u-spacer { flex: 1; }
+
+/* scrollbar บาง จาง แบบ IBM Carbon (ทุก OS) */
+* { scrollbar-width: thin; scrollbar-color: #c6c6c6 transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #c6c6c6;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: #a8a8a8; background-clip: content-box; }
+::-webkit-scrollbar-corner { background: transparent; }

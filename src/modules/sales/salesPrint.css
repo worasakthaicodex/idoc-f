@@ -1,0 +1,78 @@
+/* หน้าพิมพ์เอกสารขาย (ใบเสนอราคา/ใบสั่งขาย) — เลย์เอาต์ A4 + ซ่อนส่วนจอเวลาพิมพ์ */
+
+/* ฟอนต์ไทย THSarabunNew — เฉพาะหน้าพิมพ์เท่านั้น (ไม่กระทบหน้าอื่น) */
+@font-face {
+  font-family: "THSarabunNew";
+  src: url("/fonts/THSarabunNew.woff") format("woff"), url("/fonts/THSarabunNew.ttf") format("truetype");
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "THSarabunNew";
+  src: url("/fonts/THSarabunNew-Bold.woff") format("woff"), url("/fonts/THSarabunNew-Bold.ttf") format("truetype");
+  font-weight: bold; font-style: normal; font-display: swap;
+}
+
+.pp-screen { background: #555; min-height: 100vh; padding: 24px 0; }
+.pp-bar { max-width: 900px; margin: 0 auto 16px; display: flex; gap: 8px; align-items: center; }
+.pp-bar .pp-seg { display: inline-flex; border: 1px solid #888; border-radius: 8px; overflow: hidden; }
+.pp-bar .pp-seg button { border: none; background: #fff; padding: 8px 14px; font-size: 13.5px; cursor: pointer; color: #333; }
+.pp-bar .pp-seg button.on { background: #1f5eff; color: #fff; }
+.pp-bar .pp-hint { color: #cfd6e0; font-size: 12.5px; margin-left: 4px; }
+.pp-bar .btn { padding: 8px 16px; border-radius: 8px; border: 1px solid #888; background: #fff; cursor: pointer; font-size: 14px; }
+.pp-bar .btn.primary { background: #1f5eff; color: #fff; border-color: #1f5eff; }
+
+.pp-page {
+  width: 794px; min-height: 1123px;          /* A4 @96dpi */
+  margin: 0 auto; background: #fff; color: #111;
+  padding: 48px 56px; box-sizing: border-box;
+  font-family: "Sarabun", "TH Sarabun New", system-ui, sans-serif; font-size: 13.5px; line-height: 1.5;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+}
+.pp-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #111; padding-bottom: 14px; }
+.pp-co-name { font-size: 20px; font-weight: 700; }
+.pp-co-sub { font-size: 12.5px; color: #555; margin-top: 2px; }
+.pp-title { text-align: right; }
+.pp-title .t { font-size: 22px; font-weight: 700; letter-spacing: 1px; }
+.pp-title .c { font-size: 14px; margin-top: 4px; }
+.pp-title .d { font-size: 12.5px; color: #555; }
+
+.pp-meta { display: flex; justify-content: space-between; gap: 24px; margin: 18px 0; }
+.pp-meta .box { flex: 1; }
+.pp-meta .lb { font-size: 11.5px; color: #777; text-transform: uppercase; letter-spacing: .5px; }
+.pp-meta .vl { font-size: 14px; font-weight: 600; }
+.pp-meta .row { margin-bottom: 6px; }
+
+table.pp-items { width: 100%; border-collapse: collapse; margin-top: 8px; }
+table.pp-items th { background: #f0f2f5; border: 1px solid #c8ccd4; padding: 8px 10px; font-size: 12px; text-align: left; }
+table.pp-items td { border: 1px solid #d7dbe2; padding: 8px 10px; font-size: 13px; vertical-align: top; }
+table.pp-items td.r, table.pp-items th.r { text-align: right; }
+table.pp-items td.c, table.pp-items th.c { text-align: center; }
+
+.pp-totals { margin-top: 14px; margin-left: auto; width: 320px; }
+.pp-totals .tr { display: flex; justify-content: space-between; padding: 5px 2px; font-size: 13.5px; }
+.pp-totals .tr.grand { border-top: 2px solid #111; margin-top: 4px; padding-top: 8px; font-size: 16px; font-weight: 700; }
+
+.pp-note { margin-top: 18px; }
+.pp-note .lb { font-size: 11.5px; color: #777; }
+.pp-note .vl { white-space: pre-wrap; }
+
+.pp-sign { display: flex; justify-content: space-between; gap: 40px; margin-top: 64px; }
+.pp-sign .col { flex: 1; text-align: center; }
+.pp-sign .line { border-top: 1px solid #111; margin: 0 12px 8px; padding-top: 8px; }
+.pp-sign .role { font-size: 12.5px; color: #555; }
+
+@page { size: A4; margin: 12mm; }
+/* เอกสารแก้ได้แบบ Word — ไม่โชว์กรอบโฟกัสรก ๆ */
+.pp-page[contenteditable] { outline: none; }
+
+@media print {
+  .pp-screen { background: #fff; padding: 0; }
+  .pp-bar, .no-print { display: none !important; }
+  /* padding 2mm กันชน: ถ้า table แนบขอบพื้นที่พิมพ์พอดี Chrome จะตัดเส้นขอบขวา/ล่างทิ้ง */
+  .pp-page {
+    width: auto; min-height: auto; margin: 0; padding: 2mm; box-shadow: none;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  /* บังคับให้เส้นขอบนอกของตารางพิมพ์ออกเสมอ (กันบั๊ก border-collapse หายตอน export PDF) */
+  .pp-page table { width: 100% !important; border: 1px solid #000 !important; }
+}

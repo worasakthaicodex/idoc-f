@@ -1,0 +1,126 @@
+/* ===== ฟอร์มพนักงานเต็มหน้า (ฟิลด์เยอะ แบ่งหมวด) ===== */
+.p-empform { display: flex; flex-direction: column; height: 100vh; }
+
+/* layout: เมนูซ้าย (ชุดเดียวกับหน้า /hr) + เนื้อหา */
+.p-empform .ef-main { flex: 1; display: flex; min-height: 0; }
+.p-empform .ef-content { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.p-empform .ef-side { width: 224px; flex: none; background: #fff; border-right: 1px solid var(--line); padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; overflow: auto; }
+.p-empform .ef-side .side-title { font-size: 11px; font-weight: 700; color: var(--txt3); letter-spacing: .05em; padding: 6px 12px 8px; text-transform: uppercase; }
+.p-empform .ef-side .side-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 7px; font-size: 13.5px; color: var(--txt2); cursor: pointer; }
+.p-empform .ef-side .side-item:hover { background: var(--bg); }
+.p-empform .ef-side .side-item.active { background: #edf5ff; color: var(--blue); font-weight: 600; }
+.p-empform .ef-side .side-item.disabled { color: var(--txt3); cursor: default; }
+.p-empform .ef-side .side-item.disabled:hover { background: transparent; }
+.p-empform .ef-side .soon { margin-left: auto; font-size: 10px; background: var(--bg); color: var(--txt3); padding: 2px 7px; border-radius: 10px; }
+.p-empform .ef-side .side-divider { height: 1px; background: var(--line); margin: 8px 8px; }
+
+/* checklist ฟิลด์พนักงาน (หน้าตั้งค่า) */
+.p-empform .field-grid-chk { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 7px 14px; }
+.p-empform .fld-chk { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--txt); cursor: pointer; }
+.p-empform .fld-chk input { width: auto; flex: 0 0 auto; margin: 0; }
+.p-empform .fld-chk.core { color: var(--txt2); cursor: default; }
+.p-empform .fld-core { font-size: 10px; background: var(--bg); color: var(--txt3); padding: 1px 6px; border-radius: 8px; margin-left: 2px; }
+
+/* ===== Settings แบบ iOS (list) ===== */
+.p-empform .ios-body { max-width: 660px; }
+.p-empform .ios-head { padding: 4px 2px 10px; }
+.p-empform .ios-title { font-size: 27px; font-weight: 700; letter-spacing: -.01em; }
+.p-empform .ios-sub { font-size: 13.5px; color: var(--txt2); margin-top: 3px; }
+.p-empform .ios-group-title { font-size: 11.5px; color: var(--txt3); text-transform: uppercase; letter-spacing: .04em; padding: 18px 16px 7px; }
+.p-empform .ios-group { background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.p-empform .ios-row { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-bottom: 1px solid var(--line-soft); }
+.p-empform .ios-row:last-child { border-bottom: none; }
+.p-empform .ios-row.link { cursor: pointer; }
+.p-empform .ios-row.link:hover { background: var(--bg); }
+.p-empform .ios-ic { width: 29px; height: 29px; border-radius: 7px; display: grid; place-items: center; color: #fff; flex: none; }
+.p-empform .ios-ic.blue { background: #0a84ff; }
+.p-empform .ios-ic.gray { background: #8e8e93; }
+.p-empform .ios-ic.green { background: #34c759; }
+/* ช่องค้นหาที่อยู่ไทย */
+.p-empform .ta-box { position: relative; }
+.p-empform .ta-menu { position: absolute; z-index: 30; left: 0; right: 0; top: 100%; margin-top: 4px; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.12); max-height: 240px; overflow: auto; }
+.p-empform .ta-item { padding: 9px 12px; font-size: 13px; cursor: pointer; }
+.p-empform .ta-item:hover { background: var(--sel); }
+.p-empform .ios-label { flex: 1; font-size: 14.5px; }
+.p-empform .ios-value { font-size: 13.5px; color: var(--txt3); }
+.p-empform .ios-row .chev { color: var(--txt3); font-size: 20px; line-height: 1; }
+.p-empform .ios-group-footer { font-size: 12px; color: var(--txt3); padding: 7px 16px 0; line-height: 1.5; }
+.p-empform .ios-group-footer.err { color: var(--red); }
+
+/* iOS toggle switch */
+.p-empform .ios-switch { position: relative; width: 42px; height: 25px; flex: none; }
+.p-empform .ios-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.p-empform .ios-switch span { position: absolute; inset: 0; background: #d1d1d6; border-radius: 999px; transition: background .2s; }
+.p-empform .ios-switch span::before { content: ""; position: absolute; width: 21px; height: 21px; left: 2px; top: 2px; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s; }
+.p-empform .ios-switch input:checked + span { background: #34c759; }
+.p-empform .ios-switch input:checked + span::before { transform: translateX(17px); }
+
+/* ตั้งฟิลด์พนักงาน — drag & drop 2 คอลัมน์ */
+.p-empform .ff-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.p-empform .ff-panel { background: #fff; border: 1px solid var(--line); border-radius: 8px; min-height: 220px; display: flex; flex-direction: column; }
+.p-empform .ff-panel.over { border-color: var(--blue); box-shadow: 0 0 0 2px var(--sel); }
+.p-empform .ff-head { padding: 11px 14px; font-weight: 600; font-size: 13px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+.p-empform .ff-count { font-size: 11px; background: var(--bg); color: var(--txt2); padding: 1px 8px; border-radius: 10px; }
+.p-empform .ff-search { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line-soft); color: var(--txt3); }
+.p-empform .ff-search input { flex: 1; border: none; background: none; font-size: 13px; outline: none; padding: 2px 0; }
+.p-empform .ff-list { padding: 8px; display: flex; flex-direction: column; gap: 6px; max-height: 460px; overflow: auto; min-height: 80px; }
+.p-empform .ff-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; background: #fff; font-size: 13px; cursor: grab; }
+.p-empform .ff-item.used { background: #fafbfc; }
+.p-empform .ff-item:hover { border-color: #9cc3f0; }
+.p-empform .ff-grip { color: var(--txt3); }
+.p-empform .ff-label { flex: 1; }
+.p-empform .ff-tag { font-size: 10.5px; color: var(--txt3); background: var(--bg); padding: 1px 7px; border-radius: 8px; }
+.p-empform .ff-core { font-size: 10px; color: var(--txt3); background: var(--bg); padding: 1px 6px; border-radius: 8px; }
+.p-empform .ff-act { border: none; background: none; cursor: pointer; color: var(--red); display: grid; place-items: center; padding: 3px; border-radius: 4px; }
+.p-empform .ff-act.add { color: var(--blue); }
+.p-empform .ff-act:hover { background: var(--bg); }
+@media (max-width: 760px) { .p-empform .ff-cols { grid-template-columns: 1fr; } }
+
+/* ตัวเลือกของฟิลด์ select (chips editor) */
+.p-empform .opt-row { display: flex; align-items: flex-start; gap: 14px; padding: 11px 2px; border-bottom: 1px solid var(--line-soft); }
+.p-empform .opt-label { width: 150px; flex: none; font-size: 13.5px; padding-top: 6px; }
+.p-empform .opt-chips { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.p-empform .opt-chip { display: inline-flex; align-items: center; gap: 4px; background: var(--sel); color: var(--blue-d); border: 1px solid #9cc3f0; border-radius: 14px; padding: 3px 5px 3px 11px; font-size: 12.5px; }
+.p-empform .opt-chip button { border: none; background: none; cursor: pointer; color: var(--blue-d); font-size: 15px; line-height: 1; padding: 0 2px; }
+.p-empform .opt-add { border: 1px dashed var(--field-bd); border-radius: 14px; padding: 4px 12px; font-size: 12.5px; background: none; outline: none; min-width: 130px; }
+.p-empform .opt-add:focus { border-style: solid; border-color: var(--blue); }
+
+.p-empform .ef-body { flex: 1; overflow: auto; padding: 20px 24px; background: var(--bg); }
+.p-empform .ef-head { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.p-empform .ef-sub { font-size: 12.5px; color: var(--txt2); margin-bottom: 18px; }
+
+.p-empform .ef-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 16px; }
+.p-empform .ef-card .sh { padding: 11px 16px; font-weight: 600; font-size: 13.5px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+.p-empform .ef-grid { padding: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.p-empform .ef-grid .wide { grid-column: 1 / -1; }
+.p-empform .ef-grid textarea { min-height: 64px; resize: vertical; }
+
+.p-empform .ef-banner { padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 14px; }
+.p-empform .ef-banner.err { background: var(--red-bg); color: var(--red); }
+.p-empform .ef-note { font-size: 12px; color: var(--txt3); padding: 0 16px 14px; }
+.p-empform .perm-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-height: 28px; padding: 4px 0; }
+.p-empform .ef-hint { font-size: 12px; color: var(--txt3); margin-top: 4px; }
+.p-empform .gl-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--txt); cursor: pointer; padding: 8px 0; }
+.p-empform .perm-rows { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+.p-empform .perm-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px 6px 12px; }
+.p-empform .perm-row .perm-mod { font-size: 13px; }
+.p-empform .perm-row select { width: 140px; flex: none; }
+.p-empform .perm-x { border: none; background: transparent; color: var(--txt3); cursor: pointer; font-size: 18px; line-height: 1; width: 26px; height: 26px; border-radius: 4px; }
+.p-empform .perm-x:hover { background: var(--red-bg); color: var(--red); }
+.p-empform .perm-add { margin: 4px 0 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; gap: 8px; color: var(--blue); }
+.p-empform .perm-add select { min-width: 220px; padding: 8px 10px; background: var(--field); border: none; border-bottom: 1px solid var(--field-bd); font-size: 13px; color: var(--txt); }
+.p-empform .gl-toggle input[type="checkbox"] { width: auto; flex: 0 0 auto; margin: 0; padding: 0; background: none; border: none; }
+
+/* ===== mobile ===== */
+@media (max-width: 760px) {
+  .p-empform .ef-main { flex-direction: column; }
+  .p-empform .ef-side { width: auto; flex-direction: row; align-items: center; border-right: none; border-bottom: 1px solid var(--line); overflow-x: auto; padding: 8px 10px; gap: 6px; }
+  .p-empform .ef-side .side-title { display: none; }
+  .p-empform .ef-side .side-item { flex: none; white-space: nowrap; padding: 7px 12px; }
+  .p-empform .ef-side .side-item .soon { display: none; }
+  .p-empform .ef-body { padding: 14px 12px; }
+  .p-empform .ef-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .p-empform .topbar .doctitle { display: none; }
+}

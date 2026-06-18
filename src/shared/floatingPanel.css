@@ -1,0 +1,21 @@
+/* กล่องลอยลากได้ (ดึงกลุ่มฟิลด์ออกมาดูเทียบ) */
+.floatp {
+  position: fixed; top: 130px; left: calc(50% - 170px); z-index: 80;
+  width: 340px; max-height: 72vh; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.22);
+}
+.floatp-h {
+  display: flex; align-items: center; gap: 8px; padding: 9px 8px 9px 14px;
+  border-bottom: 1px solid var(--line); cursor: move; user-select: none;
+  background: var(--bg); border-radius: 12px 12px 0 0;
+}
+.floatp-t { flex: 1; font-size: 13px; font-weight: 600; color: var(--txt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.floatp-x { border: none; background: none; cursor: pointer; color: var(--txt2); width: 26px; height: 26px; display: grid; place-items: center; border-radius: 6px; }
+.floatp-x:hover { background: var(--line); }
+.floatp-b { padding: 10px 14px 14px; overflow-y: auto; }
+.floatp-b .fp-row { display: grid; grid-template-columns: 130px 1fr; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--bg); font-size: 13px; }
+.floatp-b .fp-row:last-child { border-bottom: none; }
+.floatp-b .fp-k { color: var(--txt2); }
+.floatp-b .fp-v { color: var(--txt); word-break: break-word; }
+.floatp-b .fp-v.muted { color: var(--txt3); }

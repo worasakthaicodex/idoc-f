@@ -1,0 +1,52 @@
+/* ===== Companies (super admin — ทะเบียนบริษัทที่เช่า) ===== */
+.p-companies { display: flex; flex-direction: column; height: 100vh; }
+.p-companies .cmp-main { flex: 1; display: flex; min-height: 0; }
+.p-companies .cmp-content { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.p-companies .cmp-body { flex: 1; overflow: auto; padding: 20px 24px; background: var(--bg); }
+
+/* left sidebar (เมนูผู้ดูแลระบบ — ขยายรายการได้) */
+.p-companies .cmp-side { width: 224px; flex: none; background: #fff; border-right: 1px solid var(--line); padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; overflow: auto; }
+.p-companies .cmp-side .side-title { font-size: 11px; font-weight: 700; color: var(--txt3); letter-spacing: .05em; padding: 6px 12px 8px; text-transform: uppercase; }
+.p-companies .cmp-side .side-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 7px; font-size: 13.5px; color: var(--txt2); cursor: pointer; }
+.p-companies .cmp-side .side-item:hover { background: var(--bg); }
+.p-companies .cmp-side .side-item.active { background: #edf5ff; color: var(--blue); font-weight: 600; }
+.p-companies .cmp-side .side-item.disabled { color: var(--txt3); cursor: default; }
+.p-companies .cmp-side .side-item.disabled:hover { background: transparent; }
+.p-companies .cmp-side .soon { margin-left: auto; font-size: 10px; background: var(--bg); color: var(--txt3); padding: 2px 7px; border-radius: 10px; }
+
+/* banner (สำเร็จ/ผิดพลาด) */
+.p-companies .cmp-banner { display: flex; align-items: center; gap: 9px; background: #defbe6; color: #0e6027; border: 1px solid #a7e0bb; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 13.5px; }
+.p-companies .cmp-banner.err { background: var(--red-bg); color: var(--red); border-color: #f3c2c4; }
+.p-companies .cmp-banner .code { font-weight: 700; font-family: ui-monospace, "SF Mono", monospace; padding: 0 2px; }
+.p-companies .cmp-banner .x { margin-left: auto; cursor: pointer; display: grid; place-items: center; opacity: .7; }
+.p-companies .cmp-banner .x:hover { opacity: 1; }
+
+.p-companies .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
+.p-companies .kpi { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.p-companies .kpi .kl { font-size: 12.5px; color: var(--txt2); display: flex; align-items: center; gap: 7px; }
+.p-companies .kpi .kl .d { width: 9px; height: 9px; border-radius: 50%; }
+.p-companies .kpi .kv { font-size: 26px; font-weight: 700; margin-top: 6px; }
+
+.p-companies .card { background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.p-companies .card .ch { padding: 12px 16px; font-size: 13.5px; font-weight: 600; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+.p-companies .acts-cell { display: flex; gap: 6px; }
+.p-companies .lbtn { font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: #fff; color: var(--txt2); cursor: pointer; }
+.p-companies .lbtn:hover { background: var(--bg); }
+.p-companies .lbtn.danger { color: var(--red); border-color: #f3c2c4; }
+.p-companies .lbtn.ok { color: #0e6027; border-color: #a7e0bb; }
+.p-companies .cmp-name { font-weight: 600; }
+.p-companies .cmp-email { font-size: 12px; color: var(--txt3); }
+
+/* drawer (เพิ่ม/แก้ไขบริษัท) */
+.drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 40; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 400px; max-width: 92vw; background: #fff; z-index: 50; box-shadow: -8px 0 30px rgba(0,0,0,.18); display: flex; flex-direction: column; }
+.drawer .dh { height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 10px 0 18px; border-bottom: 1px solid var(--line); font-weight: 600; }
+.drawer .dh .x { width: 32px; height: 32px; display: grid; place-items: center; color: var(--txt2); cursor: pointer; border-radius: 4px; }
+.drawer .dh .x:hover { background: var(--bg); }
+.drawer .db { flex: 1; overflow: auto; padding: 18px; }
+.drawer .df { padding: 14px 18px; border-top: 1px solid var(--line); display: flex; gap: 10px; }
+.drawer .df .btn { flex: 1; justify-content: center; }
+
+@media (max-width: 760px) {
+  .p-companies .kpis { grid-template-columns: repeat(2, 1fr); }
+}

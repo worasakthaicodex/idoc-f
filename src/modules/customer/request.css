@@ -1,0 +1,28 @@
+/* ===== หน้าคำขอดำเนินการ — เนื้อหากลางเป็นการ์ด เว้นพื้นที่ให้โล่ง (อยู่บน .p-qt) ===== */
+.p-req .center { background: var(--bg); padding: 22px 26px; }
+.p-req .center .sect { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px 6px; margin-bottom: 18px; }
+.p-req .center .sect .sh { border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 18px; }
+.p-req .center .cols2 { gap: 26px 44px; }
+.p-req .center .field { margin-bottom: 18px; }
+.p-req .center .field.top { align-items: start; }
+/* ช่องสำคัญ (เช่น ชื่อ) — เต็มความกว้าง label อยู่บน เพราะชื่อยาว */
+.p-req .center .field.full { display: block; }
+.p-req .center .field.full > label { display: block; text-align: left; margin-bottom: 6px; font-weight: 500; }
+.p-req .center .field.full .ctrl, .p-req .center .field.full .ctrl input { width: 100%; }
+
+/* ปุ่มสลับ รับ/ไม่รับ ใน popup รับเรื่อง (wf-seg มีแต่ใน .p-workflow เดิม) */
+.p-req .wf-seg { display: inline-flex; border: 1px solid var(--field-bd); border-radius: 8px; overflow: hidden; }
+.p-req .wf-seg button { border: none; background: #fff; color: var(--txt2); font-size: 13px; padding: 7px 18px; cursor: pointer; }
+.p-req .wf-seg button + button { border-left: 1px solid var(--field-bd); }
+.p-req .wf-seg button.on { background: var(--blue); color: #fff; font-weight: 600; }
+.p-req .wf-lbl { display: block; font-size: 12px; color: var(--txt2); margin-bottom: 5px; }
+
+/* เลือกผู้รับตอนส่ง FLOW (ผู้รับขั้นถัดไปมีหลายคน → ส่งเจาะจง/ส่งทั้งกลุ่ม) */
+.wf-flow-pick { margin: 14px 0 4px; }
+.wf-flow-pick .wf-lbl { display: block; font-size: 12px; color: var(--txt2); margin-bottom: 5px; }
+.wf-flow-pick select { width: 100%; padding: 9px 10px; border: 1px solid var(--field-bd); border-radius: 8px; font-size: 13.5px; background: #fff; }
+.wf-flow-pick .wf-flow-pickhint { font-size: 11.5px; color: var(--txt3); margin-top: 6px; line-height: 1.5; }
+
+/* หมายเหตุกฎออกเลขใต้รายการเอกสารซ้าย */
+.p-req .dtree .dnote { padding: 10px 14px; font-size: 11.5px; color: var(--txt3); border-top: 1px solid var(--line-soft); margin-top: 6px; line-height: 1.5; }
+.p-req .dtree .dnote b { color: var(--txt2); }

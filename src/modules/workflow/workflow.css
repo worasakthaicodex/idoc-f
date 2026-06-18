@@ -1,0 +1,167 @@
+/* ===== Workflow (ระบบกลางคุมคำขอ/อนุมัติ) ===== */
+.p-workflow { display: flex; flex-direction: column; height: 100vh; }
+.p-workflow .wf-main { flex: 1; display: flex; min-height: 0; }
+.p-workflow .wf-content { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.p-workflow .wf-body { flex: 1; overflow: auto; padding: 24px 28px; background: var(--bg); }
+
+/* เมนูซ้าย = เมนูใหญ่ของโมดูล (CustomerSide) */
+.p-workflow .crm-side { width: 224px; flex: none; background: #fff; border-right: 1px solid var(--line); padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; overflow: auto; }
+.p-workflow .crm-side .side-title { font-size: 11px; font-weight: 700; color: var(--txt3); letter-spacing: .05em; padding: 6px 12px 8px; text-transform: uppercase; }
+.p-workflow .crm-side .side-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 7px; font-size: 13.5px; color: var(--txt2); cursor: pointer; }
+.p-workflow .crm-side .side-item:hover { background: var(--bg); }
+.p-workflow .crm-side .side-item.active { background: #edf5ff; color: var(--blue); font-weight: 600; }
+.p-workflow .crm-side .side-item.disabled { color: var(--txt3); cursor: default; }
+.p-workflow .crm-side .side-item.disabled:hover { background: transparent; }
+.p-workflow .crm-side .soon { margin-left: auto; font-size: 10px; background: var(--bg); color: var(--txt3); padding: 2px 7px; border-radius: 10px; }
+.p-workflow .crm-side .side-divider { height: 1px; background: var(--line); margin: 8px 8px; }
+
+@media (max-width: 760px) {
+  .p-workflow .wf-main { flex-direction: column; }
+  .p-workflow .crm-side { width: auto; flex-direction: row; align-items: center; border-right: none; border-bottom: 1px solid var(--line); overflow-x: auto; padding: 8px 10px; gap: 6px; }
+  .p-workflow .crm-side .side-title { display: none; }
+  .p-workflow .crm-side .side-item { flex: none; white-space: nowrap; padding: 7px 12px; }
+}
+.p-workflow .wf-inner { max-width: 920px; }
+
+.p-workflow .wf-head { font-size: 27px; font-weight: 700; letter-spacing: -.01em; }
+.p-workflow .wf-sub { font-size: 13.5px; color: var(--txt2); margin-top: 3px; }
+.p-workflow .wf-intro { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 16px 0 8px; font-size: 13.5px; color: var(--txt); display: flex; gap: 10px; align-items: flex-start; line-height: 1.55; }
+.p-workflow .wf-intro .ic-badge { width: 30px; height: 30px; border-radius: 8px; background: #5e5ce6; color: #fff; display: grid; place-items: center; flex: none; }
+
+.p-workflow .wf-section { font-size: 11.5px; color: var(--txt3); text-transform: uppercase; letter-spacing: .04em; padding: 18px 2px 8px; }
+.p-workflow .wf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; }
+.p-workflow .wf-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 15px 16px; }
+.p-workflow .wf-card .wf-ic { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; color: #fff; margin-bottom: 10px; }
+.p-workflow .wf-card .wf-t { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+.p-workflow .wf-card .wf-d { font-size: 12.5px; color: var(--txt2); margin-top: 5px; line-height: 1.5; }
+.p-workflow .wf-soon { font-size: 10px; background: var(--bg); color: var(--txt3); padding: 1px 8px; border-radius: 10px; margin-left: auto; }
+
+@media (max-width: 760px) { .p-workflow .wf-grid { grid-template-columns: 1fr; } }
+
+.p-workflow .wf-card.link { cursor: pointer; }
+.p-workflow .wf-card.link:hover { border-color: #9cc3f0; background: #fafbff; }
+
+/* ===== Stage editor ===== */
+.p-workflow .wf-docbar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.p-workflow .wf-toprow { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.p-workflow .wf-toprow .wf-docbar { margin-bottom: 0; flex: none; }
+.p-workflow .set-head { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.p-workflow .set-sub { font-size: 12.5px; color: var(--txt2); margin-bottom: 18px; }
+.p-workflow .wf-tools { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.p-workflow .wf-tools .vsep { width: 1px; height: 20px; background: var(--line); }
+.p-workflow .wf-dt-select { border: 1px solid var(--field-bd); border-radius: 7px; padding: 6px 10px; font-size: 13px; background: #fff; }
+
+.p-workflow .wf-stages { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+/* การ์ดของแต่ละขั้น = แถวบน (กริด) + แถวล่างเลือกกลุ่มข้อมูล */
+.p-workflow .wf-st-wrap { background: #fff; border: 1px solid var(--line); border-radius: 9px; }
+/* คอลัมน์ตายตัว: ไอคอน · ชื่อ · ป้ายตรึง · ชนิด · กฎ/โน้ต(ยืด) · ปุ่ม */
+.p-workflow .wf-st { display: grid; grid-template-columns: 26px 170px 52px 140px 1fr auto; align-items: center; gap: 10px; padding: 9px 12px; }
+.p-workflow .wf-st-kind { width: 26px; height: 26px; border-radius: 7px; color: #fff; display: grid; place-items: center; }
+.p-workflow .wf-st-name { border: none; border-bottom: 1px solid transparent; font-size: 14px; font-weight: 500; padding: 3px 2px; width: 100%; min-width: 0; }
+.p-workflow .wf-st-name:focus { outline: none; border-bottom-color: var(--blue); }
+.p-workflow .wf-st-pincell { display: flex; align-items: center; }
+.p-workflow .wf-pin { font-size: 10px; background: var(--bg); color: var(--txt3); padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.p-workflow .wf-st-kindsel { border: 1px solid var(--field-bd); border-radius: 6px; padding: 4px 8px; font-size: 12.5px; background: #fff; width: 100%; }
+.p-workflow .wf-st-mid { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.p-workflow .wf-st-rule { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--txt2); cursor: pointer; white-space: nowrap; }
+.p-workflow .wf-st-rule input { width: auto; margin: 0; }
+.p-workflow .wf-st-note { font-size: 11.5px; color: var(--txt3); }
+.p-workflow .wf-grp-sel { border: 1px solid var(--field-bd); border-radius: 6px; padding: 3px 8px; font-size: 12.5px; background: #fff; }
+/* แถวล่าง: เลือกกลุ่มข้อมูล — เยื้องใต้ชื่อขั้น มีเส้นคั่นบาง ๆ ให้ดูเป็นระเบียบ */
+.p-workflow .wf-st-groups { display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px 48px; border-top: 1px dashed var(--line-soft); }
+.p-workflow .wf-grp-label { font-size: 12px; color: var(--txt2); white-space: nowrap; flex: none; }
+.p-workflow .wf-grp-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.p-workflow .wf-grp-chip { border: 1px solid var(--field-bd); border-radius: 14px; padding: 3px 11px; font-size: 12px; background: #fff; color: var(--txt2); cursor: pointer; }
+.p-workflow .wf-grp-chip:hover { border-color: var(--blue); color: var(--blue); }
+.p-workflow .wf-grp-chip.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+.p-workflow .wf-grp-all { font-size: 11.5px; color: var(--txt3); }
+.p-workflow .wf-st-act { display: flex; gap: 3px; }
+.p-workflow .wf-ibtn { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--txt2); display: grid; place-items: center; cursor: pointer; }
+.p-workflow .wf-ibtn:hover:not(:disabled) { background: var(--bg); }
+.p-workflow .wf-ibtn:disabled { opacity: .35; cursor: default; }
+.p-workflow .wf-ibtn.danger { color: var(--red); }
+.p-workflow .wf-add { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 6px; }
+
+/* ===== Work box per role (กล่องงานของแต่ละบทบาท) ===== */
+.p-workflow .wf-rolebox { display: flex; flex-direction: column; gap: 10px; margin: 10px 0; }
+.p-workflow .wf-rb-row { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 16px; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+.p-workflow .wf-rb-name { font-size: 14px; font-weight: 600; }
+.p-workflow .wf-rb-docs { display: grid; gap: 8px; min-width: 0; }
+.p-workflow .wf-rb-chip { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; min-height: 52px; border: 1px solid var(--field-bd); border-radius: 9px; background: #fff; color: var(--txt2); cursor: pointer; padding: 8px 6px; text-align: center; }
+.p-workflow .wf-rb-chip:hover { border-color: #9cc3f0; }
+.p-workflow .wf-rb-chip.on { background: #edf5ff; border-color: var(--blue); color: var(--blue-d); }
+.p-workflow .wf-rb-chip .rb-code { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; font-size: 13px; }
+.p-workflow .wf-rb-chip .rb-nm { font-size: 10.5px; line-height: 1.25; color: var(--txt3); }
+.p-workflow .wf-rb-chip.on .rb-nm { color: var(--blue-d); }
+
+/* ===== Numbering (การออกรหัสเอกสาร) ===== */
+.p-workflow .wf-issue-list { display: flex; flex-direction: column; gap: 10px; margin: 8px 0; }
+.p-workflow .wf-issue-opt { display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; cursor: pointer; background: #fff; }
+.p-workflow .wf-issue-opt:hover { border-color: #9cc3f0; }
+.p-workflow .wf-issue-opt.on { border-color: var(--blue); background: #f5f9ff; }
+.p-workflow .wf-issue-opt input { width: auto; margin: 0; }
+.p-workflow .wf-issue-no { width: 26px; height: 26px; border-radius: 50%; background: var(--bg); color: var(--txt2); display: grid; place-items: center; font-weight: 700; font-size: 13px; flex: none; }
+.p-workflow .wf-issue-opt.on .wf-issue-no { background: var(--blue); color: #fff; }
+.p-workflow .wf-issue-t { font-size: 14px; font-weight: 600; }
+.p-workflow .wf-issue-d { font-size: 12.5px; color: var(--txt2); margin-top: 2px; }
+
+/* ===== Route editor ===== */
+.p-workflow .wf-flow { display: flex; align-items: stretch; gap: 2px; flex-wrap: wrap; margin: 16px 0; }
+.p-workflow .wf-step-row { display: flex; align-items: center; gap: 2px; }
+.p-workflow .wf-step-card { border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 10px 16px; min-width: 96px; text-align: center; }
+.p-workflow .wf-step-card.cut { opacity: .5; border-style: dashed; background: var(--bg); }
+.p-workflow .wf-step-card.cut .wf-step-code, .p-workflow .wf-step-card.cut .wf-step-name { text-decoration: line-through; }
+.p-workflow .wf-step-code { font-weight: 700; font-size: 14px; }
+.p-workflow .wf-step-name { font-size: 11.5px; color: var(--txt2); margin: 2px 0 6px; }
+.p-workflow .wf-step-use { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--blue); cursor: pointer; }
+.p-workflow .wf-step-use input { width: auto; margin: 0; }
+.p-workflow .wf-lock { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; color: var(--txt3); }
+.p-workflow .wf-arrow { color: var(--txt3); display: inline-flex; align-items: center; }
+.p-workflow .wf-active { background: #fff; border: 1px solid var(--line); border-radius: 9px; padding: 12px 14px; font-size: 14px; }
+.p-workflow .wf-active .wf-arrow { font-weight: 400; color: var(--txt3); }
+
+/* ===== Authority editor ===== */
+.p-workflow .wf-cov { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 14px 0 4px; }
+.p-workflow .wf-cov-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; padding: 3px 9px; border-radius: 12px; }
+.p-workflow .wf-cov-chip.ok { background: #defbe6; color: #0e6027; }
+.p-workflow .wf-cov-chip.warn { background: var(--red-bg); color: var(--red); }
+
+.p-workflow .wf-auth-list { display: flex; flex-direction: column; gap: 12px; margin: 12px 0; }
+.p-workflow .wf-auth { border: 1px solid var(--line); border-radius: 10px; background: #fff; overflow: hidden; }
+.p-workflow .wf-auth-head { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: 1px solid var(--line-soft); }
+.p-workflow .wf-auth-name { border: none; border-bottom: 1px solid transparent; font-size: 14px; font-weight: 600; padding: 3px 2px; width: 180px; flex: none; }
+.p-workflow .wf-auth-name:focus { outline: none; border-bottom-color: var(--blue); }
+.p-workflow .wf-auth-note { flex: 1; min-width: 0; border: none; border-bottom: 1px dashed var(--field-bd); font-size: 12.5px; color: var(--txt2); padding: 3px 2px; }
+.p-workflow .wf-auth-note:focus { outline: none; border-bottom-style: solid; border-bottom-color: var(--blue); }
+.p-workflow .wf-auth-scope { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.p-workflow .wf-auth-body { padding: 12px 14px; }
+/* กล่องย่อยต่อ stage ในกรอบ */
+.p-workflow .wf-levels { display: flex; flex-direction: column; gap: 10px; }
+.p-workflow .wf-level { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fafbfc; }
+.p-workflow .wf-level-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.p-workflow .wf-level-no { width: 22px; height: 22px; border-radius: 7px; background: #5e5ce6; color: #fff; display: grid; place-items: center; flex: none; }
+.p-workflow .wf-level-title { font-size: 13.5px; font-weight: 600; flex: 1; min-width: 0; }
+.p-workflow .wf-level-kind { font-size: 10.5px; color: var(--txt3); background: var(--bg); padding: 1px 8px; border-radius: 10px; flex: none; }
+.p-workflow .wf-collapsible { cursor: pointer; margin-bottom: 0; }
+.p-workflow .wf-level-sum { font-size: 12px; color: var(--txt2); margin-left: auto; }
+.p-workflow .wf-level-body { margin-top: 10px; }
+
+/* ค้นหา + เลือกหลายอัน */
+.p-workflow .wf-pick { position: relative; }
+.p-workflow .wf-pick-menu { position: absolute; z-index: 30; left: 0; right: 0; top: 100%; margin-top: 4px; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.12); max-height: 220px; overflow: auto; }
+.p-workflow .wf-pick-item { padding: 8px 12px; font-size: 13px; cursor: pointer; }
+.p-workflow .wf-pick-item:hover { background: var(--sel); }
+.p-workflow .wf-lbl { display: block; font-size: 12px; color: var(--txt2); margin-bottom: 5px; }
+
+.p-workflow .wf-seg { display: inline-flex; border: 1px solid var(--field-bd); border-radius: 8px; overflow: hidden; }
+.p-workflow .wf-seg button { border: none; background: #fff; color: var(--txt2); font-size: 12.5px; padding: 6px 14px; cursor: pointer; }
+.p-workflow .wf-seg button + button { border-left: 1px solid var(--field-bd); }
+.p-workflow .wf-seg button.on { background: var(--blue); color: #fff; }
+
+.p-workflow .wf-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; border: 1px solid var(--field-bd); border-radius: 7px; padding: 6px 8px; min-height: 36px; }
+.p-workflow .wf-chip { display: inline-flex; align-items: center; gap: 4px; background: var(--sel); color: var(--blue-d); font-size: 12.5px; padding: 2px 4px 2px 9px; border-radius: 12px; }
+.p-workflow .wf-chip button { border: none; background: none; cursor: pointer; color: var(--blue-d); display: grid; place-items: center; padding: 1px; }
+.p-workflow .wf-chips input { border: none; outline: none; font-size: 13px; flex: 1; min-width: 100px; padding: 2px; }
+.p-workflow .wf-org { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 8px; }
+.p-workflow .wf-budget { border: 1px solid var(--field-bd); border-radius: 7px; padding: 7px 10px; font-size: 13px; width: 200px; }
+.p-workflow .wf-warn { margin-top: 10px; font-size: 12.5px; color: var(--amber, #b28600); }
