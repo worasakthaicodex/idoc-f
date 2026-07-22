@@ -7,7 +7,7 @@ An open-source ERP frontend designed for manufacturing and enterprise management
 iDoc-F is a modern web frontend for an ERP system focused on manufacturing operations. It provides an intuitive user interface for managing business processes such as production, inventory, procurement, quality management, sales, purchasing, and master data.
 
 The project is designed to be modular, scalable, and easy to integrate with RESTful backend services.
-![Dashboard](src/Screenshot 2026-07-22 190742.jpg)
+![Dashboard](Screenshot 2026-07-22 190742.jpg)
 ## Features
 
 * Dashboard and business analytics
